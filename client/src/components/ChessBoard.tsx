@@ -6,6 +6,8 @@ import type { Key } from 'chessground/types'
 import { Chess } from 'chess.js'
 import { useGameStore } from '../stores/gameStore'
 
+const ANIM_DURATION = 300
+
 function toColor(chess: Chess): 'white' | 'black' {
   return chess.turn() === 'w' ? 'white' : 'black'
 }
@@ -23,7 +25,7 @@ function toDests(chess: Chess): Map<Key, Key[]> {
 export default function ChessBoard() {
   const boardRef = useRef<HTMLDivElement>(null)
   const apiRef = useRef<Api | null>(null)
-  const { chess, opening, fen, tryMove } = useGameStore()
+  const { chess, opening, fen, tryMove, pendingOpponentMove, playOpponentMove } = useGameStore()
 
   const playerColor = opening?.color || 'white'
 
@@ -56,8 +58,6 @@ export default function ChessBoard() {
           after: (orig, dest) => {
             const result = tryMove(orig as string, dest as string)
             if (!result.correct) {
-              // Wrong move — chessground already moved the piece visually.
-              // Snap it back to the real position and re-enable moves.
               setTimeout(() => {
                 const state = useGameStore.getState()
                 apiRef.current?.set({
@@ -75,7 +75,7 @@ export default function ChessBoard() {
           },
         },
       },
-      animation: { enabled: true, duration: 400 },
+      animation: { enabled: true, duration: ANIM_DURATION },
       premovable: { enabled: false },
       draggable: { showGhost: true },
     }
@@ -85,12 +85,21 @@ export default function ChessBoard() {
     } else {
       apiRef.current = Chessground(boardRef.current, config)
     }
-  }, [opening]) // re-init when opening changes
+  }, [opening])
 
   // Update board whenever fen changes
   useEffect(() => {
     updateBoard()
   }, [fen, updateBoard])
+
+  // After user's correct move animates, play the opponent's response
+  useEffect(() => {
+    if (!pendingOpponentMove) return
+    const timer = setTimeout(() => {
+      playOpponentMove()
+    }, ANIM_DURATION + 150)
+    return () => clearTimeout(timer)
+  }, [pendingOpponentMove, playOpponentMove])
 
   return (
     <div className="flex justify-center">

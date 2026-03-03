@@ -10,7 +10,7 @@ export default function Openings() {
     fetch('/api/openings')
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
+        if (Array.isArray(data) && data.length > 0 && data[0].tree) {
           setOpenings(data)
         }
       })

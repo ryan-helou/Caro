@@ -1,13 +1,20 @@
 import { useGameStore } from '../stores/gameStore'
 
 export default function FeedbackPanel() {
-  const { feedback, isComplete, correctMoves, totalAttempts, reset } = useGameStore()
+  const { feedback, isComplete, correctMoves, totalAttempts, chosenVariationName, currentPath, reset } =
+    useGameStore()
+
+  const lastNode = currentPath.length > 0 ? currentPath[currentPath.length - 1] : null
+  const stats = lastNode?.stats
 
   if (isComplete) {
     const accuracy = totalAttempts > 0 ? Math.round((correctMoves / totalAttempts) * 100) : 0
     return (
       <div className="bg-chess-green/20 border border-chess-green/40 rounded-lg p-4">
         <h3 className="text-chess-green font-semibold text-lg mb-2">Opening Complete!</h3>
+        {chosenVariationName && (
+          <p className="text-chess-gold text-sm font-medium mb-2">{chosenVariationName}</p>
+        )}
         <p className="text-gray-300 text-sm mb-1">
           Accuracy: {accuracy}% ({correctMoves}/{totalAttempts} correct)
         </p>
@@ -39,18 +46,23 @@ export default function FeedbackPanel() {
           : 'bg-red-500/10 border-red-500/30'
       }`}
     >
-      <div className="flex items-center gap-2 mb-2">
+      <div className="mb-2">
         <span className={`font-semibold ${feedback.correct ? 'text-chess-green' : 'text-red-400'}`}>
-          {feedback.correct ? 'Correct!' : 'Not quite'}
+          {feedback.correct ? 'Correct!' : 'Not quite — try again'}
         </span>
-        {!feedback.correct && (
-          <span className="text-gray-400 text-sm">
-            Expected: <span className="font-mono text-chess-gold">{feedback.expectedMove}</span>
-          </span>
-        )}
       </div>
       {feedback.explanation && (
         <p className="text-gray-300 text-sm">{feedback.explanation}</p>
+      )}
+      {!feedback.correct && !feedback.explanation && (
+        <p className="text-gray-400 text-sm">
+          The right move here is <span className="font-mono text-chess-gold">{feedback.expectedMove}</span>.
+        </p>
+      )}
+      {feedback.correct && stats && stats.games > 0 && (
+        <p className="text-gray-500 text-xs mt-2">
+          Played in {stats.games.toLocaleString()} games ({Math.round((stats.black / stats.games) * 100)}% win rate for Black)
+        </p>
       )}
     </div>
   )

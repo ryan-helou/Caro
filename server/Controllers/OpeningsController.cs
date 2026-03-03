@@ -24,8 +24,7 @@ public class OpeningsController : ControllerBase
             Name = o.Name,
             Eco = o.Eco,
             Color = o.Color,
-            Moves = JsonSerializer.Deserialize<string[]>(o.MovesJson) ?? Array.Empty<string>(),
-            Explanations = JsonSerializer.Deserialize<Dictionary<string, string>>(o.ExplanationsJson) ?? new()
+            Tree = JsonSerializer.Deserialize<JsonElement>(o.TreeJson)
         }).ToList();
     }
 
@@ -41,8 +40,7 @@ public class OpeningsController : ControllerBase
             Name = o.Name,
             Eco = o.Eco,
             Color = o.Color,
-            Moves = JsonSerializer.Deserialize<string[]>(o.MovesJson) ?? Array.Empty<string>(),
-            Explanations = JsonSerializer.Deserialize<Dictionary<string, string>>(o.ExplanationsJson) ?? new()
+            Tree = JsonSerializer.Deserialize<JsonElement>(o.TreeJson)
         };
     }
 }
