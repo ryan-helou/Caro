@@ -1,10 +1,27 @@
+export interface MoveNode {
+  san: string
+  explanation?: string
+  coaching?: string
+  variationName?: string
+  wrongMoveResponses?: Record<string, string>
+  stats?: { white: number; draws: number; black: number; games: number; averageRating: number }
+  openingName?: string
+  children: MoveNode[]
+}
+
 export interface Opening {
   id: number
   name: string
   eco: string
   color: 'white' | 'black'
-  moves: string[]
-  explanations: Record<string, string>
+  tree: MoveNode
+}
+
+export interface LessonMeta {
+  lessonId: number
+  intro: string
+  themes: string[]
+  whenToPlay: string
 }
 
 export interface UserProgress {
@@ -14,6 +31,12 @@ export interface UserProgress {
   practiceAccuracy: number
   movesCompleted: number
   lastPracticed: string | null
+}
+
+export interface Lesson {
+  id: number
+  name: string
+  path: MoveNode[]
 }
 
 export interface MoveValidation {

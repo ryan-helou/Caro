@@ -21,7 +21,7 @@ export default function Navbar() {
               key={link.to}
               to={link.to}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                location.pathname === link.to || (link.to === '/openings' && location.pathname.startsWith('/practice'))
+                location.pathname === link.to || (link.to === '/openings' && (location.pathname.startsWith('/practice') || location.pathname.startsWith('/course') || location.pathname.startsWith('/learn')))
                   ? 'text-chess-gold bg-navy-800'
                   : 'text-gray-400 hover:text-gray-200 hover:bg-navy-900'
               }`}

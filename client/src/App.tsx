@@ -2,7 +2,10 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Landing from './pages/Landing'
 import Openings from './pages/Openings'
+import Course from './pages/Course'
 import Practice from './pages/Practice'
+import Quiz from './pages/Quiz'
+import Learn from './pages/Learn'
 import Profile from './pages/Profile'
 
 export default function App() {
@@ -12,7 +15,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/openings" element={<Openings />} />
+        <Route path="/course/:id" element={<Course />} />
+        <Route path="/learn/:id" element={<Learn />} />
         <Route path="/practice/:id" element={<Practice />} />
+        <Route path="/quiz/:id" element={<Quiz />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={
           <div className="max-w-3xl mx-auto px-4 py-12 text-center">
