@@ -10,9 +10,9 @@ export const openings: Opening[] = [
     name: 'Caro-Kann Defense',
     eco: 'B12',
     color: 'black',
-    tree: {
+    tree:     {
       san: 'e4',
-      openingName: "King's Pawn Game",
+      openingName: 'King\'s Pawn Game',
       children: [
         {
           san: 'c6',
@@ -46,7 +46,6 @@ export const openings: Opening[] = [
                     'g6': 'That\'s a Modern Defense setup. In the Caro-Kann, you want to push d5 immediately while White\'s e4 pawn is under pressure.',
                   },
                   children: [
-                    // 3.e5 — Advance Variation
                     {
                       san: 'e5',
                       stats: { white: 25310, draws: 13841, black: 24017, games: 63168, averageRating: 2172 },
@@ -67,7 +66,6 @@ export const openings: Opening[] = [
                             'c5': 'Trying to attack d4 is logical, but Bf5 is more important right now. You need to develop the bishop before closing the position with e6.',
                           },
                           children: [
-                            // 4.Nf3 — Short Classical
                             {
                               san: 'Nf3',
                               stats: { white: 8412, draws: 4756, black: 8201, games: 21369, averageRating: 2175 },
@@ -87,49 +85,20 @@ export const openings: Opening[] = [
                                   },
                                   children: [
                                     {
-                                      san: 'Be2',
-                                      stats: { white: 2890, draws: 1710, black: 2944, games: 7544, averageRating: 2179 },
-                                      openingName: 'Caro-Kann Defense: Advance Variation, Short Variation with 5.Be2',
-                                      children: [
-                                        {
-                                          san: 'Nd7',
-                                          stats: { white: 1205, draws: 738, black: 1289, games: 3232, averageRating: 2185 },
-                                          openingName: 'Caro-Kann Defense: Advance Variation, Short Variation',
-                                          explanation:
-                                            'The knight heads to d7, keeping options open for f6 or b6 later. This is the main line of the Advance.',
-                                          coaching:
-                                            'Your knight goes to d7 — a flexible square. From here it can jump to f6 (to pressure e4), go to b6 (eyeing c4), or even reroute via f8 to g6. This is the main line of the Advance Caro-Kann, and you\'re in a solid, well-known position. Well played!',
-                                          children: [],
-                                        },
-                                      ],
-                                    },
-                                    {
                                       san: 'Bd3',
-                                      stats: { white: 1402, draws: 812, black: 1351, games: 3565, averageRating: 2168 },
-                                      openingName: 'Caro-Kann Defense: Advance Variation, Short Variation with 5.Bd3',
+                                      stats: { white: 18707, draws: 2998, black: 22505, games: 44210, averageRating: 2079 },
                                       children: [
                                         {
                                           san: 'Bxd3',
-                                          stats: { white: 890, draws: 501, black: 842, games: 2233, averageRating: 2170 },
-                                          openingName: 'Caro-Kann Defense: Advance Variation, Short Variation',
-                                          explanation:
-                                            'You trade off bishops on d3, doubling White\'s pawns and simplifying the position.',
-                                          coaching:
-                                            'White puts their bishop on d3 to trade off your strong bishop. You take — after Qxd3 or cxd3, White\'s pawn structure is slightly damaged. The position is solid and you\'re ready to develop your knight to d7 and castle.',
+                                          stats: { white: 12335, draws: 2126, black: 14920, games: 29381, averageRating: 2108 },
                                           children: [
                                             {
                                               san: 'Qxd3',
-                                              stats: { white: 512, draws: 298, black: 488, games: 1298, averageRating: 2165 },
-                                              openingName: 'Caro-Kann Defense: Advance Variation',
+                                              stats: { white: 11939, draws: 2074, black: 14421, games: 28434, averageRating: 2080 },
                                               children: [
                                                 {
-                                                  san: 'Nd7',
-                                                  stats: { white: 310, draws: 185, black: 302, games: 797, averageRating: 2168 },
-                                                  openingName: 'Caro-Kann Defense: Advance Variation',
-                                                  explanation:
-                                                    'The knight develops to d7, preparing to challenge the e5 pawn.',
-                                                  coaching:
-                                                    'Standard development — the knight goes to d7, ready to go to e7-f5 or f8-g6. You\'ve traded off the bishops and have a comfortable position.',
+                                                  san: 'c5',
+                                                  stats: { white: 11334, draws: 1941, black: 13672, games: 26947, averageRating: 2108 },
                                                   children: [],
                                                 },
                                               ],
@@ -138,128 +107,223 @@ export const openings: Opening[] = [
                                         },
                                       ],
                                     },
-                                    {
-                                      san: 'c3',
-                                      stats: { white: 1105, draws: 618, black: 1072, games: 2795, averageRating: 2174 },
-                                      openingName: 'Caro-Kann Defense: Advance Variation, Short Variation with 5.c3',
-                                      children: [
-                                        {
-                                          san: 'Nd7',
-                                          stats: { white: 602, draws: 345, black: 598, games: 1545, averageRating: 2178 },
-                                          openingName: 'Caro-Kann Defense: Advance Variation',
-                                          explanation:
-                                            'The knight develops to d7, keeping flexible options.',
-                                          coaching:
-                                            'After c3, White reinforces d4. You develop the knight to d7 as usual — flexible and solid. The position is a standard Advance Caro-Kann where you\'ll aim to undermine e5 with f6.',
-                                          children: [],
-                                        },
-                                      ],
-                                    },
                                   ],
                                 },
                               ],
                             },
-                            // 4.Nc3 — with g4 Bayonet
                             {
-                              san: 'Nc3',
-                              stats: { white: 3890, draws: 2015, black: 3601, games: 9506, averageRating: 2160 },
-                              openingName: 'Caro-Kann Defense: Advance Variation, Nc3',
-                              variationName: 'Bayonet Attack',
+                              san: 'Bd3',
+                              stats: { white: 66625, draws: 10892, black: 72170, games: 149687, averageRating: 2100 },
                               children: [
                                 {
-                                  san: 'e6',
-                                  stats: { white: 2680, draws: 1412, black: 2508, games: 6600, averageRating: 2164 },
-                                  openingName: 'Caro-Kann Defense: Advance Variation',
-                                  explanation:
-                                    'You solidify d5 and keep things solid before White launches the kingside pawn storm.',
-                                  coaching:
-                                    'Same idea as the Short Classical — bishop is out, now lock in with e6. White is planning to push g4 to kick your bishop, which is why this line is called the Bayonet Attack. Don\'t panic when you see g4 coming — you have a safe retreat square.',
+                                  san: 'Bxd3',
+                                  stats: { white: 56802, draws: 9816, black: 63120, games: 129738, averageRating: 2119 },
                                   children: [
                                     {
-                                      san: 'g4',
-                                      stats: { white: 1120, draws: 555, black: 1045, games: 2720, averageRating: 2155 },
-                                      openingName: 'Caro-Kann Defense: Advance Variation, Bayonet Attack',
-                                      children: [
-                                        {
-                                          san: 'Bg6',
-                                          stats: { white: 1005, draws: 498, black: 942, games: 2445, averageRating: 2158 },
-                                          openingName: 'Caro-Kann Defense: Advance Variation, Bayonet Attack',
-                                          explanation:
-                                            'The bishop retreats to g6, the only safe square. From here it still watches over key light squares.',
-                                          coaching:
-                                            'When White plays g4, don\'t worry — just retreat to g6. Your bishop is still doing great work from this square, controlling e4 and h5. White spent a tempo pushing a pawn, while your bishop remains active. The Bayonet Attack looks scary, but you\'re perfectly fine here.',
-                                          wrongMoveResponses: {
-                                            'Bg4': 'Your bishop can\'t go to g4 — there\'s a white pawn there! Bg6 is the right retreat.',
-                                            'Be4': 'That square is too exposed. White\'s Nc3 can kick it away. Bg6 is the safe, active retreat square.',
-                                          },
-                                          children: [],
-                                        },
-                                      ],
-                                    },
-                                    {
-                                      san: 'Nge2',
-                                      stats: { white: 890, draws: 478, black: 812, games: 2180, averageRating: 2162 },
-                                      openingName: 'Caro-Kann Defense: Advance Variation',
-                                      children: [
-                                        {
-                                          san: 'Nd7',
-                                          stats: { white: 512, draws: 280, black: 478, games: 1270, averageRating: 2165 },
-                                          openingName: 'Caro-Kann Defense: Advance Variation',
-                                          explanation:
-                                            'The knight develops to d7, preparing to challenge e5.',
-                                          coaching:
-                                            'White\'s knight goes to e2 instead of f3, staying out of the way of the f-pawn. You continue with Nd7, the standard developing move. Your plan is the same: undermine e5 with c5 or f6.',
-                                          children: [],
-                                        },
-                                      ],
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                            // 4.h4 — Tal Variation
-                            {
-                              san: 'h4',
-                              stats: { white: 2108, draws: 1012, black: 1890, games: 5010, averageRating: 2155 },
-                              openingName: 'Caro-Kann Defense: Advance Variation, Tal Variation',
-                              variationName: 'Tal Variation',
-                              children: [
-                                {
-                                  san: 'h5',
-                                  stats: { white: 1580, draws: 778, black: 1445, games: 3803, averageRating: 2160 },
-                                  openingName: 'Caro-Kann Defense: Advance Variation, Tal Variation with 4...h5',
-                                  explanation:
-                                    'You stop h5, preventing White from harassing your bishop further.',
-                                  coaching:
-                                    'White plays h4 trying to play h5 and trap or exchange your bishop. You respond with h5, stopping that idea in its tracks. Your bishop stays safe on f5 and White has weakened their kingside. This is the main line — simple and effective.',
-                                  children: [
-                                    {
-                                      san: 'Bd3',
-                                      stats: { white: 510, draws: 258, black: 472, games: 1240, averageRating: 2158 },
-                                      openingName: 'Caro-Kann Defense: Advance Variation, Tal Variation',
-                                      children: [
-                                        {
-                                          san: 'Bxd3',
-                                          stats: { white: 320, draws: 168, black: 302, games: 790, averageRating: 2155 },
-                                          openingName: 'Caro-Kann Defense: Advance Variation, Tal Variation',
-                                          explanation: 'You trade bishops, simplifying the position.',
-                                          coaching: 'White offers the bishop trade on d3. You take it — after Qxd3, your position is solid and you can develop smoothly with e6, Nd7, and Ne7.',
-                                          children: [],
-                                        },
-                                      ],
-                                    },
-                                    {
-                                      san: 'c3',
-                                      stats: { white: 405, draws: 198, black: 367, games: 970, averageRating: 2152 },
-                                      openingName: 'Caro-Kann Defense: Advance Variation, Tal Variation',
+                                      san: 'Qxd3',
+                                      stats: { white: 55284, draws: 9560, black: 61435, games: 126279, averageRating: 2102 },
                                       children: [
                                         {
                                           san: 'e6',
-                                          stats: { white: 248, draws: 128, black: 234, games: 610, averageRating: 2155 },
-                                          openingName: 'Caro-Kann Defense: Advance Variation, Tal Variation',
-                                          explanation: 'You solidify d5 with e6.',
-                                          coaching: 'After c3 reinforcing d4, you play e6 to complete your pawn structure. Your bishop is safely on f5 and you\'re ready to develop with Nd7 and Ne7.',
-                                          children: [],
+                                          stats: { white: 51039, draws: 8746, black: 56462, games: 116247, averageRating: 2118 },
+                                          children: [
+                                            {
+                                              san: 'Nf3',
+                                              stats: { white: 18820, draws: 3424, black: 22336, games: 44580, averageRating: 2086 },
+                                              children: [
+                                                {
+                                                  san: 'c5',
+                                                  stats: { white: 11334, draws: 1941, black: 13672, games: 26947, averageRating: 2108 },
+                                                  children: [
+                                                    {
+                                                      san: 'c3',
+                                                      stats: { white: 7657, draws: 1269, black: 8991, games: 17917, averageRating: 2088 },
+                                                      children: [
+                                                        {
+                                                          san: 'Nc6',
+                                                          stats: { white: 8008, draws: 1350, black: 9465, games: 18823, averageRating: 2114 },
+                                                          children: [
+                                                            {
+                                                              san: 'O-O',
+                                                              stats: { white: 5278, draws: 893, black: 6126, games: 12297, averageRating: 2097 },
+                                                              children: [],
+                                                            },
+                                                            {
+                                                              san: 'a3',
+                                                              stats: { white: 1205, draws: 185, black: 1154, games: 2544, averageRating: 2108 },
+                                                              children: [],
+                                                            },
+                                                          ],
+                                                        },
+                                                      ],
+                                                    },
+                                                    {
+                                                      san: 'dxc5',
+                                                      stats: { white: 1050, draws: 160, black: 1347, games: 2557, averageRating: 2083 },
+                                                      children: [
+                                                        {
+                                                          san: 'Bxc5',
+                                                          stats: { white: 643, draws: 106, black: 868, games: 1617, averageRating: 2105 },
+                                                          children: [],
+                                                        },
+                                                      ],
+                                                    },
+                                                  ],
+                                                },
+                                              ],
+                                            },
+                                            {
+                                              san: 'f4',
+                                              stats: { white: 11602, draws: 1922, black: 12779, games: 26303, averageRating: 2110 },
+                                              children: [
+                                                {
+                                                  san: 'c5',
+                                                  stats: { white: 4251, draws: 691, black: 4896, games: 9838, averageRating: 2112 },
+                                                  children: [
+                                                    {
+                                                      san: 'c3',
+                                                      stats: { white: 3270, draws: 502, black: 3629, games: 7401, averageRating: 2107 },
+                                                      children: [
+                                                        {
+                                                          san: 'Nc6',
+                                                          stats: { white: 2810, draws: 441, black: 3195, games: 6446, averageRating: 2118 },
+                                                          children: [
+                                                            {
+                                                              san: 'Nf3',
+                                                              stats: { white: 2598, draws: 390, black: 2852, games: 5840, averageRating: 2109 },
+                                                              children: [],
+                                                            },
+                                                          ],
+                                                        },
+                                                      ],
+                                                    },
+                                                    {
+                                                      san: 'Nf3',
+                                                      stats: { white: 600, draws: 108, black: 740, games: 1448, averageRating: 2095 },
+                                                      children: [
+                                                        {
+                                                          san: 'Nc6',
+                                                          stats: { white: 809, draws: 152, black: 1089, games: 2050, averageRating: 2103 },
+                                                          children: [
+                                                            {
+                                                              san: 'c3',
+                                                              stats: { white: 461, draws: 83, black: 576, games: 1120, averageRating: 2081 },
+                                                              children: [],
+                                                            },
+                                                          ],
+                                                        },
+                                                      ],
+                                                    },
+                                                  ],
+                                                },
+                                              ],
+                                            },
+                                            {
+                                              san: 'Ne2',
+                                              stats: { white: 10240, draws: 1528, black: 9684, games: 21452, averageRating: 2124 },
+                                              children: [
+                                                {
+                                                  san: 'c5',
+                                                  stats: { white: 3965, draws: 626, black: 3888, games: 8479, averageRating: 2132 },
+                                                  children: [
+                                                    {
+                                                      san: 'c3',
+                                                      stats: { white: 3565, draws: 556, black: 3387, games: 7508, averageRating: 2130 },
+                                                      children: [
+                                                        {
+                                                          san: 'Nc6',
+                                                          stats: { white: 3420, draws: 555, black: 3325, games: 7300, averageRating: 2138 },
+                                                          children: [
+                                                            {
+                                                              san: 'O-O',
+                                                              stats: { white: 2143, draws: 330, black: 2051, games: 4524, averageRating: 2133 },
+                                                              children: [],
+                                                            },
+                                                            {
+                                                              san: 'a3',
+                                                              stats: { white: 720, draws: 122, black: 610, games: 1452, averageRating: 2155 },
+                                                              children: [],
+                                                            },
+                                                          ],
+                                                        },
+                                                      ],
+                                                    },
+                                                  ],
+                                                },
+                                              ],
+                                            },
+                                          ],
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                            {
+                              san: 'h4',
+                              stats: { white: 69787, draws: 8662, black: 53944, games: 132393, averageRating: 2164 },
+                              openingName: 'Caro-Kann Defense: Advance Variation, Tal Variation',
+                              children: [
+                                {
+                                  san: 'h5',
+                                  stats: { white: 41193, draws: 5902, black: 33931, games: 81026, averageRating: 2169 },
+                                  children: [
+                                    {
+                                      san: 'Bd3',
+                                      stats: { white: 20581, draws: 3398, black: 17874, games: 41853, averageRating: 2181 },
+                                      children: [
+                                        {
+                                          san: 'Bxd3',
+                                          stats: { white: 19507, draws: 3273, black: 17121, games: 39901, averageRating: 2178 },
+                                          children: [
+                                            {
+                                              san: 'Qxd3',
+                                              stats: { white: 19316, draws: 3238, black: 16925, games: 39479, averageRating: 2183 },
+                                              children: [
+                                                {
+                                                  san: 'e6',
+                                                  stats: { white: 16400, draws: 2701, black: 14170, games: 33271, averageRating: 2169 },
+                                                  children: [
+                                                    {
+                                                      san: 'Bg5',
+                                                      stats: { white: 7340, draws: 1111, black: 4978, games: 13429, averageRating: 2211 },
+                                                      children: [
+                                                        {
+                                                          san: 'Be7',
+                                                          stats: { white: 3094, draws: 454, black: 2052, games: 5600, averageRating: 2173 },
+                                                          children: [
+                                                            {
+                                                              san: 'Nf3',
+                                                              stats: { white: 2900, draws: 413, black: 1857, games: 5170, averageRating: 2207 },
+                                                              children: [],
+                                                            },
+                                                          ],
+                                                        },
+                                                      ],
+                                                    },
+                                                  ],
+                                                },
+                                              ],
+                                            },
+                                          ],
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      san: 'Bg5',
+                                      stats: { white: 10213, draws: 1025, black: 6382, games: 17620, averageRating: 2187 },
+                                      children: [
+                                        {
+                                          san: 'Qb6',
+                                          stats: { white: 7769, draws: 771, black: 4795, games: 13335, averageRating: 2187 },
+                                          children: [
+                                            {
+                                              san: 'Bd3',
+                                              stats: { white: 7494, draws: 742, black: 4449, games: 12685, averageRating: 2198 },
+                                              children: [],
+                                            },
+                                          ],
                                         },
                                       ],
                                     },
@@ -271,7 +335,6 @@ export const openings: Opening[] = [
                         },
                       ],
                     },
-                    // 3.Nc3 — Classical Variation
                     {
                       san: 'Nc3',
                       stats: { white: 32450, draws: 17512, black: 28108, games: 78070, averageRating: 2198 },
@@ -297,7 +360,6 @@ export const openings: Opening[] = [
                               stats: { white: 27580, draws: 15012, black: 23901, games: 66493, averageRating: 2202 },
                               openingName: 'Caro-Kann Defense: Classical Variation',
                               children: [
-                                // 4...Bf5 main line
                                 {
                                   san: 'Bf5',
                                   stats: { white: 15210, draws: 8502, black: 13108, games: 36820, averageRating: 2198 },
@@ -332,110 +394,27 @@ export const openings: Opening[] = [
                                               children: [
                                                 {
                                                   san: 'h6',
-                                                  stats: { white: 3890, draws: 2198, black: 3401, games: 9489, averageRating: 2208 },
-                                                  openingName: 'Caro-Kann Defense: Classical Variation, Main Line',
-                                                  explanation:
-                                                    'You stop h5, preventing White from trading off your bishop. A critical defensive move.',
-                                                  coaching:
-                                                    'This is a must-know move! White plays h4 threatening h5, which would trade off your beautiful bishop. By playing h6, you put a stop to that idea permanently. It looks like a small move, but it\'s one of the most important in the entire Classical Caro-Kann. Without it, you lose your best piece.',
-                                                  wrongMoveResponses: {
-                                                    'h5': 'That actually helps White! After h5, White can play the bishop to h7 and it gets trapped. You want h6 to stop White\'s h5 push.',
-                                                    'Nf6': 'Development is good, but White will play h5 next move and trap or trade your bishop. h6 first — save the bishop!',
-                                                  },
-                                                  children: [
-                                                    {
-                                                      san: 'Nf3',
-                                                      stats: { white: 2102, draws: 1205, black: 1845, games: 5152, averageRating: 2210 },
-                                                      openingName: 'Caro-Kann Defense: Classical Variation, Main Line',
-                                                      children: [
-                                                        {
-                                                          san: 'Nd7',
-                                                          stats: { white: 1480, draws: 862, black: 1312, games: 3654, averageRating: 2212 },
-                                                          openingName: 'Caro-Kann Defense: Classical Variation, Main Line',
-                                                          explanation:
-                                                            'The knight develops to d7, heading for f6 or supporting e5. Flexible and solid.',
-                                                          coaching:
-                                                            'Your knight goes to d7, the standard developing move. From d7 it can go to f6 (the most natural) or even to b6. You\'re following the Classical main line perfectly — your position is sound, your pieces are coordinated, and you\'re ready to castle. Great work!',
-                                                          children: [],
-                                                        },
-                                                      ],
-                                                    },
-                                                    {
-                                                      san: 'h5',
-                                                      stats: { white: 1012, draws: 578, black: 890, games: 2480, averageRating: 2198 },
-                                                      openingName: 'Caro-Kann Defense: Classical Variation',
-                                                      children: [
-                                                        {
-                                                          san: 'Bh7',
-                                                          stats: { white: 890, draws: 512, black: 788, games: 2190, averageRating: 2200 },
-                                                          openingName: 'Caro-Kann Defense: Classical Variation',
-                                                          explanation:
-                                                            'The bishop retreats to h7, out of danger. It\'s passive but safe.',
-                                                          coaching:
-                                                            'After h5, your bishop has to retreat further to h7. It\'s not ideal — the bishop is passive here — but the position is still solid. This is why most players prefer to play h6 earlier, to prevent this. But even from h7, you have a playable game.',
-                                                          children: [],
-                                                        },
-                                                      ],
-                                                    },
-                                                  ],
+                                                  stats: { white: 50183, draws: 8729, black: 42044, games: 100956, averageRating: 2142 },
+                                                  children: [],
                                                 },
                                               ],
                                             },
                                             {
                                               san: 'Nf3',
-                                              stats: { white: 3105, draws: 1789, black: 2701, games: 7595, averageRating: 2199 },
-                                              openingName: 'Caro-Kann Defense: Classical Variation, Main Line',
-                                              children: [
-                                                {
-                                                  san: 'Nd7',
-                                                  stats: { white: 1802, draws: 1045, black: 1589, games: 4436, averageRating: 2202 },
-                                                  openingName: 'Caro-Kann Defense: Classical Variation, Main Line',
-                                                  explanation:
-                                                    'The knight develops to d7, a flexible square.',
-                                                  coaching:
-                                                    'Nd7 is the standard developing move. From d7, the knight can go to f6 to develop naturally, or support a c5 break later.',
-                                                  children: [
-                                                    {
-                                                      san: 'h4',
-                                                      stats: { white: 802, draws: 478, black: 712, games: 1992, averageRating: 2205 },
-                                                      openingName: 'Caro-Kann Defense: Classical Variation',
-                                                      children: [
-                                                        {
-                                                          san: 'h6',
-                                                          stats: { white: 605, draws: 368, black: 542, games: 1515, averageRating: 2208 },
-                                                          openingName: 'Caro-Kann Defense: Classical Variation',
-                                                          explanation: 'Stopping h5 once again — a key prophylactic move.',
-                                                          coaching: 'Same idea — whenever White plays h4, answer with h6 to keep your bishop safe on g6. This is a pattern you should internalize for all Classical Caro-Kann positions.',
-                                                          children: [],
-                                                        },
-                                                      ],
-                                                    },
-                                                  ],
-                                                },
-                                              ],
+                                              stats: { white: 70979, draws: 12620, black: 66338, games: 149937, averageRating: 2124 },
+                                              children: [],
+                                            },
+                                            {
+                                              san: 'N1e2',
+                                              stats: { white: 6558, draws: 911, black: 4579, games: 12048, averageRating: 2175 },
+                                              children: [],
                                             },
                                           ],
                                         },
                                       ],
                                     },
-                                    {
-                                      san: 'Nf3',
-                                      stats: { white: 2205, draws: 1212, black: 1908, games: 5325, averageRating: 2190 },
-                                      openingName: 'Caro-Kann Defense: Classical Variation, 5.Nf3',
-                                      children: [
-                                        {
-                                          san: 'Bg6',
-                                          stats: { white: 1512, draws: 845, black: 1302, games: 3659, averageRating: 2192 },
-                                          openingName: 'Caro-Kann Defense: Classical Variation',
-                                          explanation: 'The bishop retreats to g6, the natural square.',
-                                          coaching: 'After Nf3, the knight doesn\'t threaten the bishop directly, but Bg6 is still the right retreat — it\'s the most flexible square for the bishop in the Classical.',
-                                          children: [],
-                                        },
-                                      ],
-                                    },
                                   ],
                                 },
-                                // 4...Nd7 alternative
                                 {
                                   san: 'Nd7',
                                   stats: { white: 5890, draws: 3201, black: 5102, games: 14193, averageRating: 2205 },
@@ -447,71 +426,47 @@ export const openings: Opening[] = [
                                   children: [
                                     {
                                       san: 'Nf3',
-                                      stats: { white: 2512, draws: 1368, black: 2189, games: 6069, averageRating: 2208 },
-                                      openingName: 'Caro-Kann Defense: Classical Variation, 4...Nd7',
+                                      stats: { white: 27779, draws: 6234, black: 26326, games: 60339, averageRating: 2137 },
                                       children: [
                                         {
                                           san: 'Ngf6',
-                                          stats: { white: 2105, draws: 1156, black: 1845, games: 5106, averageRating: 2210 },
-                                          openingName: 'Caro-Kann Defense: Classical Variation, 4...Nd7',
-                                          explanation:
-                                            'The second knight develops to f6, challenging the e4 knight directly.',
-                                          coaching:
-                                            'Now you bring out the second knight to f6, directly attacking White\'s powerful e4 knight. White has to react — usually the knight retreats to g3. You\'re developing with tempo and fighting for the center. This is efficient, active play.',
-                                          wrongMoveResponses: {
-                                            'e6': 'The pawn move is too slow here. Ngf6 challenges the e4 knight directly, developing with tempo.',
-                                          },
+                                          stats: { white: 28227, draws: 6135, black: 26682, games: 61044, averageRating: 2140 },
                                           children: [
                                             {
-                                              san: 'Nxf6+',
-                                              stats: { white: 1402, draws: 778, black: 1245, games: 3425, averageRating: 2212 },
-                                              openingName: 'Caro-Kann Defense: Classical Variation',
+                                              san: 'Ng3',
+                                              stats: { white: 9392, draws: 1644, black: 8661, games: 19697, averageRating: 2140 },
+                                              openingName: 'Caro-Kann Defense: Karpov Variation, Modern Variation, Kasparov Attack',
                                               children: [
                                                 {
-                                                  san: 'Nxf6',
-                                                  stats: { white: 1380, draws: 768, black: 1230, games: 3378, averageRating: 2212 },
-                                                  openingName: 'Caro-Kann Defense: Classical Variation',
-                                                  explanation:
-                                                    'You recapture with the knight, keeping active piece placement.',
-                                                  coaching:
-                                                    'You take back with the knight, maintaining active piece placement. Your knight is well-posted on f6, controlling key central squares. You\'re ready to develop with Bf5 or Bg4 and castle.',
+                                                  san: 'e6',
+                                                  stats: { white: 6347, draws: 1162, black: 6183, games: 13692, averageRating: 2143 },
                                                   children: [],
                                                 },
                                               ],
                                             },
                                             {
-                                              san: 'Ng3',
-                                              stats: { white: 502, draws: 278, black: 445, games: 1225, averageRating: 2205 },
-                                              openingName: 'Caro-Kann Defense: Classical Variation',
+                                              san: 'Nxf6+',
+                                              stats: { white: 8397, draws: 2143, black: 7201, games: 17741, averageRating: 2152 },
                                               children: [
                                                 {
-                                                  san: 'e6',
-                                                  stats: { white: 305, draws: 172, black: 278, games: 755, averageRating: 2208 },
-                                                  openingName: 'Caro-Kann Defense: Classical Variation',
-                                                  explanation:
-                                                    'You complete the solid pawn structure, ready to develop the bishop and castle.',
-                                                  coaching:
-                                                    'Now e6 makes sense — your knights are developed, and you\'re completing your pawn structure. You can develop your dark-squared bishop (to d6 or e7) and castle next. Your light-squared bishop can still come to f5 or d7 depending on the position. Well played through the Modern Classical!',
+                                                  san: 'Nxf6',
+                                                  stats: { white: 8327, draws: 2127, black: 7120, games: 17574, averageRating: 2152 },
+                                                  children: [],
+                                                },
+                                              ],
+                                            },
+                                            {
+                                              san: 'Bd3',
+                                              stats: { white: 7225, draws: 1855, black: 7788, games: 16868, averageRating: 2115 },
+                                              children: [
+                                                {
+                                                  san: 'Nxe4',
+                                                  stats: { white: 7760, draws: 2027, black: 8612, games: 18399, averageRating: 2130 },
                                                   children: [],
                                                 },
                                               ],
                                             },
                                           ],
-                                        },
-                                      ],
-                                    },
-                                    {
-                                      san: 'Bc4',
-                                      stats: { white: 1205, draws: 645, black: 1012, games: 2862, averageRating: 2195 },
-                                      openingName: 'Caro-Kann Defense: Classical Variation, 4...Nd7 5.Bc4',
-                                      children: [
-                                        {
-                                          san: 'Ngf6',
-                                          stats: { white: 845, draws: 462, black: 718, games: 2025, averageRating: 2198 },
-                                          openingName: 'Caro-Kann Defense: Classical Variation',
-                                          explanation: 'Developing the knight to f6 and challenging the e4 knight.',
-                                          coaching: 'Same idea — Ngf6 to challenge White\'s strong e4 knight. After the knights trade, you\'ll have a comfortable position.',
-                                          children: [],
                                         },
                                       ],
                                     },
@@ -523,7 +478,6 @@ export const openings: Opening[] = [
                         },
                       ],
                     },
-                    // 3.exd5 — Exchange Variation
                     {
                       san: 'exd5',
                       stats: { white: 20415, draws: 12108, black: 18890, games: 51413, averageRating: 2178 },
@@ -542,7 +496,6 @@ export const openings: Opening[] = [
                             'Nf6': 'You need to recapture the pawn first! After cxd5 you restore material equality and keep a solid center.',
                           },
                           children: [
-                            // 4.Bd3
                             {
                               san: 'Bd3',
                               stats: { white: 6802, draws: 4212, black: 6401, games: 17415, averageRating: 2175 },
@@ -551,46 +504,74 @@ export const openings: Opening[] = [
                               children: [
                                 {
                                   san: 'Nc6',
-                                  stats: { white: 2802, draws: 1789, black: 2689, games: 7280, averageRating: 2178 },
-                                  openingName: 'Caro-Kann Defense: Exchange Variation',
-                                  explanation:
-                                    'The knight develops to c6, putting pressure on d4 right away.',
-                                  coaching:
-                                    'Nc6 is the natural, active developing move. Your knight pressures White\'s d4 pawn immediately, and you\'re following a basic opening principle: develop knights before bishops, and aim them toward the center.',
-                                  wrongMoveResponses: {
-                                    'Bf5': 'Bf5 is playable but slightly premature — White can play Qf3 to create uncomfortable pressure. Nc6 develops with a purpose, targeting d4.',
-                                    'e6': 'Too passive! You don\'t need to protect d5 with e6 in the Exchange — it\'s not under attack. Develop your pieces instead.',
-                                  },
+                                  stats: { white: 93783, draws: 17878, black: 88115, games: 199776, averageRating: 2152 },
                                   children: [
                                     {
                                       san: 'c3',
-                                      stats: { white: 1305, draws: 845, black: 1245, games: 3395, averageRating: 2180 },
-                                      openingName: 'Caro-Kann Defense: Exchange Variation',
+                                      stats: { white: 79293, draws: 15329, black: 72566, games: 167188, averageRating: 2154 },
                                       children: [
                                         {
                                           san: 'Nf6',
-                                          stats: { white: 905, draws: 598, black: 868, games: 2371, averageRating: 2182 },
-                                          openingName: 'Caro-Kann Defense: Exchange Variation',
-                                          explanation:
-                                            'The kingside knight develops to f6, controlling e4 and preparing to castle.',
-                                          coaching:
-                                            'Perfect — your second knight comes to f6, the most natural square. You\'re controlling e4, developing toward the center, and you\'re almost ready to castle. The Quiet Exchange gives you a comfortable, easy-to-play position. Well done!',
-                                          children: [],
+                                          stats: { white: 60667, draws: 11721, black: 53928, games: 126316, averageRating: 2149 },
+                                          children: [
+                                            {
+                                              san: 'Bf4',
+                                              stats: { white: 31659, draws: 6273, black: 25605, games: 63537, averageRating: 2170 },
+                                              openingName: 'Caro-Kann Defense: Exchange Variation, Rubinstein Variation',
+                                              children: [
+                                                {
+                                                  san: 'Bg4',
+                                                  stats: { white: 23159, draws: 4654, black: 19888, games: 47701, averageRating: 2161 },
+                                                  children: [],
+                                                },
+                                              ],
+                                            },
+                                            {
+                                              san: 'h3',
+                                              stats: { white: 23927, draws: 4490, black: 21017, games: 49434, averageRating: 2144 },
+                                              children: [
+                                                {
+                                                  san: 'g6',
+                                                  stats: { white: 10958, draws: 2476, black: 11138, games: 24572, averageRating: 2168 },
+                                                  children: [],
+                                                },
+                                              ],
+                                            },
+                                            {
+                                              san: 'Nf3',
+                                              stats: { white: 8299, draws: 1650, black: 7986, games: 17935, averageRating: 2128 },
+                                              children: [
+                                                {
+                                                  san: 'Bg4',
+                                                  stats: { white: 17376, draws: 3483, black: 18537, games: 39396, averageRating: 2142 },
+                                                  children: [],
+                                                },
+                                              ],
+                                            },
+                                          ],
                                         },
                                       ],
                                     },
                                     {
                                       san: 'Nf3',
-                                      stats: { white: 1012, draws: 658, black: 978, games: 2648, averageRating: 2176 },
-                                      openingName: 'Caro-Kann Defense: Exchange Variation',
+                                      stats: { white: 10527, draws: 1883, black: 10908, games: 23318, averageRating: 2124 },
                                       children: [
                                         {
-                                          san: 'Nf6',
-                                          stats: { white: 712, draws: 468, black: 690, games: 1870, averageRating: 2178 },
-                                          openingName: 'Caro-Kann Defense: Exchange Variation',
-                                          explanation: 'Natural development to f6.',
-                                          coaching: 'Nf6 develops with purpose — controlling e4 and getting ready to castle. The Exchange Variation is all about smooth, natural development.',
-                                          children: [],
+                                          san: 'Bg4',
+                                          stats: { white: 24703, draws: 4287, black: 27282, games: 56272, averageRating: 2131 },
+                                          children: [
+                                            {
+                                              san: 'c3',
+                                              stats: { white: 21188, draws: 3804, black: 22428, games: 47420, averageRating: 2116 },
+                                              children: [
+                                                {
+                                                  san: 'e6',
+                                                  stats: { white: 13380, draws: 2424, black: 14535, games: 30339, averageRating: 2129 },
+                                                  children: [],
+                                                },
+                                              ],
+                                            },
+                                          ],
                                         },
                                       ],
                                     },
@@ -598,7 +579,6 @@ export const openings: Opening[] = [
                                 },
                               ],
                             },
-                            // 4.c4 — Panov-Botvinnik
                             {
                               san: 'c4',
                               stats: { white: 5108, draws: 2912, black: 4602, games: 12622, averageRating: 2185 },
@@ -607,46 +587,36 @@ export const openings: Opening[] = [
                               children: [
                                 {
                                   san: 'Nf6',
-                                  stats: { white: 4012, draws: 2301, black: 3612, games: 9925, averageRating: 2188 },
-                                  openingName: 'Caro-Kann Defense: Panov-Botvinnik Attack',
-                                  explanation:
-                                    'The knight develops to f6, putting pressure on the center and preparing rapid development.',
-                                  coaching:
-                                    'White plays c4, attacking your d5 pawn — this is the Panov-Botvinnik Attack, the most ambitious line in the Exchange. You respond with Nf6, developing a piece and defending d5. This leads to rich middlegame positions, often with an isolated d-pawn for White, which you can target later.',
-                                  wrongMoveResponses: {
-                                    'dxc4': 'Taking on c4 gives White exactly what they want — a lead in development and open lines. Keep your d5 pawn and develop with Nf6.',
-                                    'e6': 'e6 is too passive. Nf6 develops a piece AND defends d5 at the same time. Always prefer active moves!',
-                                  },
+                                  stats: { white: 88545, draws: 16511, black: 83864, games: 188920, averageRating: 2145 },
                                   children: [
                                     {
                                       san: 'Nc3',
-                                      stats: { white: 2501, draws: 1445, black: 2245, games: 6191, averageRating: 2190 },
-                                      openingName: 'Caro-Kann Defense: Panov-Botvinnik Attack',
+                                      stats: { white: 77923, draws: 14488, black: 71038, games: 163449, averageRating: 2149 },
+                                      openingName: 'Caro-Kann Defense: Panov Attack',
                                       children: [
                                         {
-                                          san: 'e6',
-                                          stats: { white: 1502, draws: 878, black: 1345, games: 3725, averageRating: 2192 },
-                                          openingName: 'Caro-Kann Defense: Panov-Botvinnik Attack',
-                                          explanation:
-                                            'You solidify d5 and prepare to develop the bishop. This leads to rich IQP middlegame positions.',
-                                          coaching:
-                                            'Now e6 is correct — you\'re reinforcing d5 against White\'s pressure. After White captures (cxd5 exd5 or Nxd5), you\'ll get positions with an isolated queen\'s pawn (IQP). These are rich, dynamic middlegames where both sides have chances. You\'ve navigated the Panov-Botvinnik well!',
-                                          children: [],
-                                        },
-                                      ],
-                                    },
-                                    {
-                                      san: 'Nf3',
-                                      stats: { white: 1102, draws: 612, black: 978, games: 2692, averageRating: 2185 },
-                                      openingName: 'Caro-Kann Defense: Panov-Botvinnik Attack',
-                                      children: [
-                                        {
-                                          san: 'e6',
-                                          stats: { white: 658, draws: 378, black: 602, games: 1638, averageRating: 2188 },
-                                          openingName: 'Caro-Kann Defense: Panov-Botvinnik Attack',
-                                          explanation: 'Solidifying d5 against White\'s pressure.',
-                                          coaching: 'Same idea — e6 shores up d5 and prepares to develop the dark-squared bishop. The Panov-Botvinnik often transposes into IQP structures.',
-                                          children: [],
+                                          san: 'Nc6',
+                                          stats: { white: 31919, draws: 6512, black: 31259, games: 69690, averageRating: 2168 },
+                                          openingName: 'Caro-Kann Defense: Panov Attack, Modern Defense',
+                                          children: [
+                                            {
+                                              san: 'Nf3',
+                                              stats: { white: 21536, draws: 4511, black: 20376, games: 46423, averageRating: 2157 },
+                                              children: [
+                                                {
+                                                  san: 'Bg4',
+                                                  stats: { white: 21339, draws: 4437, black: 20792, games: 46568, averageRating: 2158 },
+                                                  openingName: 'Caro-Kann Defense: Panov Attack, Modern Defense, Mieses Line',
+                                                  children: [],
+                                                },
+                                              ],
+                                            },
+                                            {
+                                              san: 'Bg5',
+                                              stats: { white: 6868, draws: 1278, black: 6000, games: 14146, averageRating: 2186 },
+                                              children: [],
+                                            },
+                                          ],
                                         },
                                       ],
                                     },
@@ -654,27 +624,10 @@ export const openings: Opening[] = [
                                 },
                               ],
                             },
-                            // 4.Nf3
-                            {
-                              san: 'Nf3',
-                              stats: { white: 4205, draws: 2612, black: 3912, games: 10729, averageRating: 2178 },
-                              openingName: 'Caro-Kann Defense: Exchange Variation, 4.Nf3',
-                              children: [
-                                {
-                                  san: 'Nc6',
-                                  stats: { white: 1502, draws: 945, black: 1412, games: 3859, averageRating: 2180 },
-                                  openingName: 'Caro-Kann Defense: Exchange Variation',
-                                  explanation: 'The knight develops to c6, pressuring d4.',
-                                  coaching: 'Nc6 targets d4 — the most active developing move in the Exchange. You\'re building up pressure on White\'s center.',
-                                  children: [],
-                                },
-                              ],
-                            },
                           ],
                         },
                       ],
                     },
-                    // 3.Nd2 — Two Knights Variation
                     {
                       san: 'Nd2',
                       stats: { white: 12108, draws: 6845, black: 10512, games: 29465, averageRating: 2185 },
@@ -699,35 +652,237 @@ export const openings: Opening[] = [
                                   san: 'Nf6',
                                   stats: { white: 4512, draws: 2589, black: 3978, games: 11079, averageRating: 2192 },
                                   openingName: 'Caro-Kann Defense: Two Knights Attack',
-                                  explanation: 'Developing the knight to f6 and challenging the e4 knight.',
-                                  coaching: 'Nf6 challenges the e4 knight directly. White usually has to retreat with Nxf6+ or Ng3, and you get a comfortable position with natural development.',
+                                  explanation:
+                                    'Developing the knight to f6 and challenging the e4 knight.',
+                                  coaching:
+                                    'Nf6 challenges the e4 knight directly. White usually has to retreat with Nxf6+ or Ng3, and you get a comfortable position with natural development.',
                                   children: [
                                     {
                                       san: 'Nxf6+',
-                                      stats: { white: 2102, draws: 1212, black: 1845, games: 5159, averageRating: 2195 },
-                                      openingName: 'Caro-Kann Defense: Two Knights Attack',
+                                      stats: { white: 110352, draws: 21001, black: 104176, games: 235529, averageRating: 2154 },
                                       children: [
                                         {
                                           san: 'exf6',
-                                          stats: { white: 1105, draws: 645, black: 978, games: 2728, averageRating: 2198 },
-                                          openingName: 'Caro-Kann Defense: Two Knights Attack',
-                                          explanation: 'You recapture toward the center, keeping the pawn structure flexible.',
-                                          coaching: 'Taking with the e-pawn opens your bishop\'s diagonal and gives you a semi-open e-file. The doubled f-pawns look unusual but give you control of key central squares.',
-                                          children: [],
+                                          stats: { white: 100542, draws: 19177, black: 94351, games: 214070, averageRating: 2152 },
+                                          openingName: 'Caro-Kann Defense: Tartakower Variation',
+                                          children: [
+                                            {
+                                              san: 'Nf3',
+                                              stats: { white: 39932, draws: 7907, black: 41610, games: 89449, averageRating: 2129 },
+                                              children: [
+                                                {
+                                                  san: 'Bd6',
+                                                  stats: { white: 35727, draws: 7366, black: 39312, games: 82405, averageRating: 2146 },
+                                                  children: [],
+                                                },
+                                              ],
+                                            },
+                                            {
+                                              san: 'c3',
+                                              stats: { white: 32732, draws: 5828, black: 25469, games: 64029, averageRating: 2197 },
+                                              children: [
+                                                {
+                                                  san: 'Bd6',
+                                                  stats: { white: 28600, draws: 5060, black: 22628, games: 56288, averageRating: 2186 },
+                                                  children: [],
+                                                },
+                                              ],
+                                            },
+                                            {
+                                              san: 'Bc4',
+                                              stats: { white: 12522, draws: 2564, black: 11782, games: 26868, averageRating: 2143 },
+                                              openingName: 'Caro-Kann Defense: Forgacs Variation',
+                                              children: [
+                                                {
+                                                  san: 'Bd6',
+                                                  stats: { white: 9522, draws: 1981, black: 9150, games: 20653, averageRating: 2147 },
+                                                  children: [],
+                                                },
+                                              ],
+                                            },
+                                          ],
                                         },
                                       ],
                                     },
                                     {
                                       san: 'Ng3',
-                                      stats: { white: 1805, draws: 1032, black: 1578, games: 4415, averageRating: 2190 },
-                                      openingName: 'Caro-Kann Defense: Two Knights Attack',
+                                      stats: { white: 31282, draws: 5088, black: 31604, games: 67974, averageRating: 2129 },
                                       children: [
                                         {
-                                          san: 'e6',
-                                          stats: { white: 802, draws: 468, black: 712, games: 1982, averageRating: 2192 },
-                                          openingName: 'Caro-Kann Defense: Two Knights Attack',
-                                          explanation: 'You play e6 to solidify d5.',
-                                          coaching: 'After Ng3, you can play e6 to shore up d5. Your light-squared bishop can still come out via d7 or even f5 later. Standard Caro-Kann play.',
+                                          san: 'Bg4',
+                                          stats: { white: 9982, draws: 1668, black: 9349, games: 20999, averageRating: 2114 },
+                                          children: [
+                                            {
+                                              san: 'Be2',
+                                              stats: { white: 4397, draws: 869, black: 4119, games: 9385, averageRating: 2122 },
+                                              children: [],
+                                            },
+                                          ],
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      san: 'Ng5',
+                                      stats: { white: 11855, draws: 1488, black: 10377, games: 23720, averageRating: 2145 },
+                                      children: [
+                                        {
+                                          san: 'h6',
+                                          stats: { white: 6821, draws: 814, black: 5784, games: 13419, averageRating: 2144 },
+                                          children: [
+                                            {
+                                              san: 'Nxf7',
+                                              stats: { white: 3606, draws: 319, black: 2784, games: 6709, averageRating: 2132 },
+                                              openingName: 'Caro-Kann Defense: Alien Gambit',
+                                              children: [],
+                                            },
+                                          ],
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      san: 'f3',
+                      stats: { white: 5012, draws: 2501, black: 5108, games: 12621, averageRating: 2152 },
+                      openingName: 'Caro-Kann Defense: Fantasy Variation',
+                      variationName: 'Fantasy Variation',
+                      children: [
+                        {
+                          san: 'dxe4',
+                          stats: { white: 38798, draws: 3925, black: 27767, games: 70490, averageRating: 2126 },
+                          children: [
+                            {
+                              san: 'fxe4',
+                              stats: { white: 37993, draws: 3821, black: 27043, games: 68857, averageRating: 2138 },
+                              children: [
+                                {
+                                  san: 'e5',
+                                  stats: { white: 24456, draws: 2745, black: 19415, games: 46616, averageRating: 2145 },
+                                  children: [
+                                    {
+                                      san: 'Nf3',
+                                      stats: { white: 23346, draws: 2556, black: 17556, games: 43458, averageRating: 2152 },
+                                      children: [
+                                        {
+                                          san: 'Bg4',
+                                          stats: { white: 12148, draws: 1367, black: 9679, games: 23194, averageRating: 2152 },
+                                          children: [
+                                            {
+                                              san: 'Bc4',
+                                              stats: { white: 9629, draws: 975, black: 7349, games: 17953, averageRating: 2160 },
+                                              children: [
+                                                {
+                                                  san: 'Nd7',
+                                                  stats: { white: 4288, draws: 596, black: 4958, games: 9842, averageRating: 2184 },
+                                                  children: [
+                                                    {
+                                                      san: 'O-O',
+                                                      stats: { white: 3051, draws: 427, black: 3731, games: 7209, averageRating: 2175 },
+                                                      children: [
+                                                        {
+                                                          san: 'Ngf6',
+                                                          stats: { white: 2493, draws: 381, black: 3425, games: 6299, averageRating: 2188 },
+                                                          children: [
+                                                            {
+                                                              san: 'c3',
+                                                              stats: { white: 1179, draws: 183, black: 1170, games: 2532, averageRating: 2221 },
+                                                              children: [
+                                                                {
+                                                                  san: 'Bd6',
+                                                                  stats: { white: 861, draws: 129, black: 900, games: 1890, averageRating: 2230 },
+                                                                  children: [],
+                                                                },
+                                                              ],
+                                                            },
+                                                          ],
+                                                        },
+                                                      ],
+                                                    },
+                                                    {
+                                                      san: 'c3',
+                                                      stats: { white: 960, draws: 119, black: 752, games: 1831, averageRating: 2212 },
+                                                      children: [
+                                                        {
+                                                          san: 'Ngf6',
+                                                          stats: { white: 555, draws: 68, black: 384, games: 1007, averageRating: 2183 },
+                                                          children: [],
+                                                        },
+                                                      ],
+                                                    },
+                                                  ],
+                                                },
+                                              ],
+                                            },
+                                          ],
+                                        },
+                                        {
+                                          san: 'exd4',
+                                          stats: { white: 9277, draws: 914, black: 6063, games: 16254, averageRating: 2129 },
+                                          children: [
+                                            {
+                                              san: 'Bc4',
+                                              stats: { white: 8133, draws: 629, black: 4493, games: 13255, averageRating: 2152 },
+                                              openingName: 'Caro-Kann Defense: Maróczy Variation, Maróczy Gambit',
+                                              children: [
+                                                {
+                                                  san: 'Be6',
+                                                  stats: { white: 1851, draws: 167, black: 1003, games: 3021, averageRating: 2132 },
+                                                  children: [
+                                                    {
+                                                      san: 'Bxe6',
+                                                      stats: { white: 1818, draws: 161, black: 974, games: 2953, averageRating: 2153 },
+                                                      children: [
+                                                        {
+                                                          san: 'fxe6',
+                                                          stats: { white: 1815, draws: 161, black: 974, games: 2950, averageRating: 2133 },
+                                                          children: [
+                                                            {
+                                                              san: 'O-O',
+                                                              stats: { white: 1266, draws: 84, black: 531, games: 1881, averageRating: 2158 },
+                                                              children: [],
+                                                            },
+                                                          ],
+                                                        },
+                                                      ],
+                                                    },
+                                                  ],
+                                                },
+                                              ],
+                                            },
+                                            {
+                                              san: 'Qxd4',
+                                              stats: { white: 901, draws: 237, black: 1209, games: 2347, averageRating: 2095 },
+                                              children: [
+                                                {
+                                                  san: 'Qxd4',
+                                                  stats: { white: 797, draws: 227, black: 1114, games: 2138, averageRating: 2111 },
+                                                  children: [
+                                                    {
+                                                      san: 'Nxd4',
+                                                      stats: { white: 797, draws: 227, black: 1113, games: 2137, averageRating: 2096 },
+                                                      children: [
+                                                        {
+                                                          san: 'Bc5',
+                                                          stats: { white: 392, draws: 110, black: 527, games: 1029, averageRating: 2110 },
+                                                          children: [],
+                                                        },
+                                                      ],
+                                                    },
+                                                  ],
+                                                },
+                                              ],
+                                            },
+                                          ],
+                                        },
+                                        {
+                                          san: 'Be6',
+                                          stats: { white: 988, draws: 185, black: 1180, games: 2353, averageRating: 2229 },
                                           children: [],
                                         },
                                       ],
@@ -740,76 +895,237 @@ export const openings: Opening[] = [
                         },
                       ],
                     },
-                    // 3.f3 — Fantasy Variation
+                  ],
+                },
+              ],
+            },
+            {
+              san: 'Nf3',
+              stats: { white: 394160, draws: 63617, black: 433322, games: 891099, averageRating: 2093 },
+              children: [
+                {
+                  san: 'd5',
+                  stats: { white: 374079, draws: 61311, black: 414414, games: 849804, averageRating: 2113 },
+                  children: [
                     {
-                      san: 'f3',
-                      stats: { white: 5012, draws: 2501, black: 5108, games: 12621, averageRating: 2152 },
-                      openingName: 'Caro-Kann Defense: Fantasy Variation',
-                      variationName: 'Fantasy Variation',
+                      san: 'exd5',
+                      stats: { white: 204862, draws: 36180, black: 244046, games: 485088, averageRating: 2079 },
                       children: [
                         {
-                          san: 'dxe4',
-                          stats: { white: 2890, draws: 1402, black: 3012, games: 7304, averageRating: 2148 },
-                          openingName: 'Caro-Kann Defense: Fantasy Variation',
-                          explanation:
-                            'You take the pawn. After f3, White wants a massive center — challenge it immediately!',
-                          coaching:
-                            'White plays f3?! This is the Fantasy Variation — White wants to build a huge center with fxe4 and d4, but it weakens their king. You should take immediately with dxe4. Don\'t let White achieve their dream center for free!',
-                          wrongMoveResponses: {
-                            'e6': 'Too timid! White played a weakening move (f3), and you should punish it by taking the pawn. dxe4 forces White to recapture with the f-pawn, opening up their king.',
-                            'Qb6': 'Qb6 targets b2, but it\'s too early for queen moves. Take the pawn first with dxe4 — the center is where the fight is.',
-                          },
+                          san: 'cxd5',
+                          stats: { white: 203277, draws: 35949, black: 242906, games: 482132, averageRating: 2106 },
                           children: [
                             {
-                              san: 'fxe4',
-                              stats: { white: 2512, draws: 1212, black: 2612, games: 6336, averageRating: 2145 },
-                              openingName: 'Caro-Kann Defense: Fantasy Variation',
+                              san: 'd4',
+                              stats: { white: 169628, draws: 30203, black: 201475, games: 401306, averageRating: 2079 },
                               children: [
                                 {
-                                  san: 'e5',
-                                  stats: { white: 1302, draws: 612, black: 1389, games: 3303, averageRating: 2142 },
-                                  openingName: 'Caro-Kann Defense: Fantasy Variation',
-                                  explanation:
-                                    'You strike at White\'s overextended center. This counterattack is the key idea against the Fantasy.',
-                                  coaching:
-                                    'Now for the knockout punch — e5! White\'s center looks big, but it\'s overextended. By striking with e5, you\'re exploiting the fact that White weakened their position with f3. After dxe5, you\'ll develop with tempo. This is the best response to the Fantasy and puts you in a great position.',
-                                  wrongMoveResponses: {
-                                    'Nf6': 'Nf6 is natural but too slow. You need to strike while the iron is hot! e5 challenges White\'s overextended center immediately.',
-                                    'c5': 'c5 attacks d4 but e5 is stronger — it opens the center when White\'s king is vulnerable after playing f3.',
-                                  },
+                                  san: 'Nc6',
+                                  stats: { white: 113284, draws: 21026, black: 138583, games: 272893, averageRating: 2123 },
+                                  openingName: 'Caro-Kann Defense: Exchange Variation',
                                   children: [
                                     {
-                                      san: 'Nf3',
-                                      stats: { white: 505, draws: 232, black: 545, games: 1282, averageRating: 2138 },
-                                      openingName: 'Caro-Kann Defense: Fantasy Variation',
+                                      san: 'Bd3',
+                                      stats: { white: 25414, draws: 4404, black: 28569, games: 58387, averageRating: 2111 },
                                       children: [
                                         {
                                           san: 'Bg4',
-                                          stats: { white: 302, draws: 138, black: 332, games: 772, averageRating: 2135 },
-                                          openingName: 'Caro-Kann Defense: Fantasy Variation',
-                                          explanation:
-                                            'You pin the knight to the queen, cranking up the pressure on d4 and White\'s center.',
-                                          coaching:
-                                            'Bg4 pins White\'s knight to the queen — beautiful! You\'re piling up pressure on d4, and White is already in an uncomfortable position. The Fantasy Variation is fun for White to play, but if you know the right response, you come out on top. Excellent work through this line!',
-                                          wrongMoveResponses: {
-                                            'exd4': 'Taking on d4 trades off your active central pawn. Bg4 is better — pin the knight and keep the pressure building!',
-                                          },
-                                          children: [],
+                                          stats: { white: 24703, draws: 4287, black: 27282, games: 56272, averageRating: 2131 },
+                                          children: [
+                                            {
+                                              san: 'c3',
+                                              stats: { white: 21188, draws: 3804, black: 22428, games: 47420, averageRating: 2116 },
+                                              children: [],
+                                            },
+                                          ],
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      san: 'Nc3',
+                      stats: { white: 93698, draws: 14314, black: 84890, games: 192902, averageRating: 2130 },
+                      openingName: 'Caro-Kann Defense: Two Knights Attack',
+                      children: [
+                        {
+                          san: 'dxe4',
+                          stats: { white: 92167, draws: 14900, black: 75876, games: 182943, averageRating: 2130 },
+                          children: [
+                            {
+                              san: 'Nxe4',
+                              stats: { white: 91475, draws: 14819, black: 75213, games: 181507, averageRating: 2140 },
+                              children: [
+                                {
+                                  san: 'Nf6',
+                                  stats: { white: 49912, draws: 9079, black: 45994, games: 104985, averageRating: 2148 },
+                                  children: [
+                                    {
+                                      san: 'Qe2',
+                                      stats: { white: 21922, draws: 3799, black: 17382, games: 43103, averageRating: 2174 },
+                                      children: [
+                                        {
+                                          san: 'Nxe4',
+                                          stats: { white: 16075, draws: 3124, black: 13424, games: 32623, averageRating: 2172 },
+                                          children: [
+                                            {
+                                              san: 'Qxe4',
+                                              stats: { white: 16072, draws: 3123, black: 13413, games: 32608, averageRating: 2179 },
+                                              children: [],
+                                            },
+                                          ],
                                         },
                                       ],
                                     },
                                     {
-                                      san: 'dxe5',
-                                      stats: { white: 412, draws: 190, black: 445, games: 1047, averageRating: 2140 },
-                                      openingName: 'Caro-Kann Defense: Fantasy Variation',
+                                      san: 'Nxf6+',
+                                      stats: { white: 16020, draws: 3270, black: 16693, games: 35983, averageRating: 2141 },
                                       children: [
                                         {
-                                          san: 'Qxd1+',
-                                          stats: { white: 245, draws: 125, black: 268, games: 638, averageRating: 2138 },
-                                          openingName: 'Caro-Kann Defense: Fantasy Variation',
-                                          explanation: 'You trade queens, heading for a favorable endgame.',
-                                          coaching: 'After dxe5 Qxd1+, you trade queens and reach an endgame where your extra pawn structure advantage and White\'s weakened king give you a comfortable edge.',
-                                          children: [],
+                                          san: 'exf6',
+                                          stats: { white: 14608, draws: 3040, black: 15321, games: 32969, averageRating: 2140 },
+                                          children: [
+                                            {
+                                              san: 'd4',
+                                              stats: { white: 7590, draws: 1545, black: 7794, games: 16929, averageRating: 2150 },
+                                              children: [],
+                                            },
+                                          ],
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              san: 'Nc3',
+              stats: { white: 157977, draws: 25043, black: 148419, games: 331439, averageRating: 2135 },
+              openingName: 'Caro-Kann Defense',
+              children: [
+                {
+                  san: 'd5',
+                  stats: { white: 147770, draws: 23974, black: 140424, games: 312168, averageRating: 2136 },
+                  openingName: 'Caro-Kann Defense',
+                  children: [
+                    {
+                      san: 'Nf3',
+                      stats: { white: 81289, draws: 13401, black: 69042, games: 163732, averageRating: 2159 },
+                      openingName: 'Caro-Kann Defense: Two Knights Attack',
+                      children: [
+                        {
+                          san: 'dxe4',
+                          stats: { white: 92167, draws: 14900, black: 75876, games: 182943, averageRating: 2130 },
+                          children: [
+                            {
+                              san: 'Nxe4',
+                              stats: { white: 91475, draws: 14819, black: 75213, games: 181507, averageRating: 2140 },
+                              children: [
+                                {
+                                  san: 'Nf6',
+                                  stats: { white: 49912, draws: 9079, black: 45994, games: 104985, averageRating: 2148 },
+                                  children: [
+                                    {
+                                      san: 'Qe2',
+                                      stats: { white: 21922, draws: 3799, black: 17382, games: 43103, averageRating: 2174 },
+                                      children: [
+                                        {
+                                          san: 'Nxe4',
+                                          stats: { white: 16075, draws: 3124, black: 13424, games: 32623, averageRating: 2172 },
+                                          children: [
+                                            {
+                                              san: 'Qxe4',
+                                              stats: { white: 16072, draws: 3123, black: 13413, games: 32608, averageRating: 2179 },
+                                              children: [],
+                                            },
+                                          ],
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      san: 'Nxf6+',
+                                      stats: { white: 16020, draws: 3270, black: 16693, games: 35983, averageRating: 2141 },
+                                      children: [
+                                        {
+                                          san: 'exf6',
+                                          stats: { white: 14608, draws: 3040, black: 15321, games: 32969, averageRating: 2140 },
+                                          children: [
+                                            {
+                                              san: 'd4',
+                                              stats: { white: 7590, draws: 1545, black: 7794, games: 16929, averageRating: 2150 },
+                                              children: [],
+                                            },
+                                          ],
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      san: 'd4',
+                      stats: { white: 17655, draws: 2793, black: 16436, games: 36884, averageRating: 2133 },
+                      openingName: 'Caro-Kann Defense',
+                      children: [
+                        {
+                          san: 'dxe4',
+                          stats: { white: 345169, draws: 58650, black: 316994, games: 720813, averageRating: 2133 },
+                          openingName: 'Caro-Kann Defense',
+                          children: [
+                            {
+                              san: 'Nxe4',
+                              stats: { white: 321564, draws: 56040, black: 297133, games: 674737, averageRating: 2135 },
+                              openingName: 'Caro-Kann Defense: Main Line',
+                              children: [
+                                {
+                                  san: 'Nf6',
+                                  stats: { white: 166009, draws: 29591, black: 159471, games: 355071, averageRating: 2146 },
+                                  children: [
+                                    {
+                                      san: 'Nxf6+',
+                                      stats: { white: 110352, draws: 21001, black: 104176, games: 235529, averageRating: 2154 },
+                                      children: [
+                                        {
+                                          san: 'exf6',
+                                          stats: { white: 100542, draws: 19177, black: 94351, games: 214070, averageRating: 2152 },
+                                          openingName: 'Caro-Kann Defense: Tartakower Variation',
+                                          children: [
+                                            {
+                                              san: 'Nf3',
+                                              stats: { white: 39932, draws: 7907, black: 41610, games: 89449, averageRating: 2129 },
+                                              children: [],
+                                            },
+                                            {
+                                              san: 'c3',
+                                              stats: { white: 32732, draws: 5828, black: 25469, games: 64029, averageRating: 2197 },
+                                              children: [],
+                                            },
+                                            {
+                                              san: 'Bc4',
+                                              stats: { white: 12522, draws: 2564, black: 11782, games: 26868, averageRating: 2143 },
+                                              openingName: 'Caro-Kann Defense: Forgacs Variation',
+                                              children: [],
+                                            },
+                                          ],
                                         },
                                       ],
                                     },
@@ -1018,3 +1334,31 @@ export const lessonMetas: LessonMeta[] = [
       'When White captures dxe5 in the Fantasy. The queen trade leads to a comfortable endgame for Black.',
   },
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

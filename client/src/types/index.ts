@@ -39,6 +39,8 @@ export interface Lesson {
   path: MoveNode[]
 }
 
+export type Difficulty = 'beginner' | 'intermediate' | 'advanced' | 'insane'
+
 export interface MoveValidation {
   correct: boolean
   expectedMove: string

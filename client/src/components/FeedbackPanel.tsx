@@ -13,7 +13,7 @@ export default function FeedbackPanel() {
       <div className="bg-chess-green/20 border border-chess-green/40 rounded-lg p-4">
         <h3 className="text-chess-green font-semibold text-lg mb-2">Opening Complete!</h3>
         {chosenVariationName && (
-          <p className="text-chess-gold text-sm font-medium mb-2">{chosenVariationName}</p>
+          <p className="text-chess-green text-sm font-medium mb-2">{chosenVariationName}</p>
         )}
         <p className="text-gray-300 text-sm mb-1">
           Accuracy: {accuracy}% ({correctMoves}/{totalAttempts} correct)
@@ -56,7 +56,7 @@ export default function FeedbackPanel() {
       )}
       {!feedback.correct && !feedback.explanation && (
         <p className="text-gray-400 text-sm">
-          The right move here is <span className="font-mono text-chess-gold">{feedback.expectedMove}</span>.
+          The right move here is <span className="font-mono text-chess-green">{feedback.expectedMove}</span>.
         </p>
       )}
       {feedback.correct && stats && stats.games > 0 && (

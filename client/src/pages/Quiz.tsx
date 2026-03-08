@@ -1,13 +1,14 @@
 import { useEffect, useState, useRef, useCallback, useMemo } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useSearchParams, Link } from 'react-router-dom'
 import { Chessground } from 'chessground'
 import type { Api } from 'chessground/api'
 import type { Config } from 'chessground/config'
 import type { Key } from 'chessground/types'
 import { Chess } from 'chess.js'
-import { extractLessons } from '../utils/treeUtils'
+import { extractLessons, groupLessonsByVariation } from '../utils/treeUtils'
 import { openings } from '../data/openings'
 import type { Opening, Lesson, MoveNode } from '../types'
+import { playCorrect, playWrong } from '../utils/sounds'
 
 function toDests(chess: Chess): Map<Key, Key[]> {
   const dests = new Map<Key, Key[]>()
@@ -30,6 +31,44 @@ interface QuizPosition {
   expectedTo: string
   lessonName: string
   moveIndex: number
+  coaching?: string
+  wrongMoveExplanation?: string
+  posKey: string
+}
+
+// --- Spaced repetition tracking ---
+interface QuizRecord {
+  correct: number
+  wrong: number
+  lastSeen: number
+}
+
+function getQuizHistory(): Record<string, QuizRecord> {
+  try {
+    const raw = localStorage.getItem('caro-quiz-history')
+    if (raw) return JSON.parse(raw)
+  } catch {}
+  return {}
+}
+
+function saveQuizResult(posKey: string, correct: boolean) {
+  const history = getQuizHistory()
+  const record = history[posKey] || { correct: 0, wrong: 0, lastSeen: 0 }
+  if (correct) record.correct++
+  else record.wrong++
+  record.lastSeen = Date.now()
+  history[posKey] = record
+  localStorage.setItem('caro-quiz-history', JSON.stringify(history))
+}
+
+function getWeight(posKey: string, history: Record<string, QuizRecord>): number {
+  const record = history[posKey]
+  if (!record) return 3 // never seen = high priority
+  const errorRate = record.wrong / (record.correct + record.wrong)
+  const hoursSinceLastSeen = (Date.now() - record.lastSeen) / (1000 * 60 * 60)
+  // Higher weight for: more errors, longer since last seen
+  // Minimum weight of 1 so every position has a chance
+  return Math.max(1, errorRate * 5 + Math.min(hoursSinceLastSeen / 24, 3))
 }
 
 function generatePosition(opening: Opening, lessons: Lesson[]): QuizPosition | null {
@@ -37,33 +76,41 @@ function generatePosition(opening: Opening, lessons: Lesson[]): QuizPosition | n
 
   const playerIsWhite = opening.color === 'white'
 
-  // lesson.path = [move0, move1, move2, ...]
-  // path[0] is the first move (e.g. e4 for white openings, e4 for black openings too)
-  // For white openings: path[0]=white, path[1]=black, path[2]=white ...
-  // For black openings: path[0]=white, path[1]=black, path[2]=white ...
-  // Player move indices: white player plays even indices (0,2,4...), black player plays odd indices (1,3,5...)
-
-  const candidates: { lesson: Lesson; answerIndex: number }[] = []
+  // Build candidates, deduplicating by FEN + expected move
+  const seen = new Set<string>()
+  const candidates: { lesson: Lesson; answerIndex: number; fen: string; expectedSan: string; posKey: string }[] = []
   for (const lesson of lessons) {
+    const chess = new Chess()
     for (let i = 0; i < lesson.path.length; i++) {
       const isPlayerMove = playerIsWhite ? i % 2 === 0 : i % 2 === 1
       if (isPlayerMove) {
-        candidates.push({ lesson, answerIndex: i })
+        const fen = chess.fen()
+        const key = `${fen}|${lesson.path[i].san}`
+        if (!seen.has(key)) {
+          seen.add(key)
+          candidates.push({ lesson, answerIndex: i, fen, expectedSan: lesson.path[i].san, posKey: key })
+        }
       }
+      chess.move(lesson.path[i].san)
     }
   }
 
   if (candidates.length === 0) return null
 
-  const pick = candidates[Math.floor(Math.random() * candidates.length)]
-  const { lesson, answerIndex } = pick
-
-  // Replay all moves before answerIndex to get the board position
-  const chess = new Chess()
-  for (let i = 0; i < answerIndex; i++) {
-    chess.move(lesson.path[i].san)
+  // Weighted random selection — prioritize positions with more errors or not seen recently
+  const history = getQuizHistory()
+  const weights = candidates.map((c) => getWeight(c.posKey, history))
+  const totalWeight = weights.reduce((a, b) => a + b, 0)
+  let roll = Math.random() * totalWeight
+  let pickIndex = 0
+  for (let i = 0; i < weights.length; i++) {
+    roll -= weights[i]
+    if (roll <= 0) { pickIndex = i; break }
   }
+  const pick = candidates[pickIndex]
+  const { lesson, answerIndex, fen } = pick
 
+  const chess = new Chess(fen)
   const expectedNode = lesson.path[answerIndex]
 
   // Find from/to for the expected move
@@ -72,12 +119,15 @@ function generatePosition(opening: Opening, lessons: Lesson[]): QuizPosition | n
   if (!match) return null
 
   return {
-    fen: chess.fen(),
+    fen,
     expectedSan: expectedNode.san,
     expectedFrom: match.from,
     expectedTo: match.to,
     lessonName: lesson.name,
     moveIndex: answerIndex,
+    coaching: expectedNode.coaching,
+    wrongMoveExplanation: expectedNode.explanation,
+    posKey: pick.posKey,
   }
 }
 
@@ -85,6 +135,7 @@ type AnswerState = 'waiting' | 'correct' | 'wrong'
 
 export default function Quiz() {
   const { id } = useParams<{ id: string }>()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [opening, setOpening] = useState<Opening | null>(null)
   const [notFound, setNotFound] = useState(false)
 
@@ -97,33 +148,40 @@ export default function Quiz() {
   const positionRef = useRef<QuizPosition | null>(null)
 
   const openingId = Number(id)
+  const selectedVariation = searchParams.get('variation') || ''
 
   // Load opening
   useEffect(() => {
     setNotFound(false)
-    fetch(`/api/openings/${openingId}`)
-      .then((res) => {
-        if (!res.ok) throw new Error('not found')
-        return res.json()
-      })
-      .then((data: Opening) => {
-        if (data && data.tree) {
-          setOpening(data)
-        } else {
-          throw new Error('invalid')
-        }
-      })
-      .catch(() => {
-        const local = openings.find((o) => o.id === openingId)
-        if (local) {
-          setOpening(local)
-        } else {
-          setNotFound(true)
-        }
-      })
+    const local = openings.find((o) => o.id === openingId)
+    if (local) {
+      setOpening(local)
+    } else {
+      setNotFound(true)
+    }
   }, [openingId])
 
-  const lessons = useMemo(() => (opening ? extractLessons(opening.tree) : []), [opening])
+  const allLessons = useMemo(() => (opening ? extractLessons(opening.tree) : []), [opening])
+  const groups = useMemo(() => groupLessonsByVariation(allLessons), [allLessons])
+  const variationNames = useMemo(() => groups.map((g) => g.variation), [groups])
+
+  const lessons = useMemo(() => {
+    if (!selectedVariation) return allLessons
+    const group = groups.find((g) => g.variation === selectedVariation)
+    return group ? group.lessons : allLessons
+  }, [allLessons, groups, selectedVariation])
+
+  const handleVariationChange = useCallback(
+    (variation: string) => {
+      if (variation) {
+        setSearchParams({ variation })
+      } else {
+        setSearchParams({})
+      }
+      setScore({ correct: 0, total: 0 })
+    },
+    [setSearchParams]
+  )
 
   const loadNewPosition = useCallback(() => {
     if (!opening || lessons.length === 0) return
@@ -149,9 +207,13 @@ export default function Quiz() {
       const isCorrect = orig === pos.expectedFrom && dest === pos.expectedTo
 
       if (isCorrect) {
+        playCorrect()
+        saveQuizResult(pos.posKey, true)
         setAnswerState('correct')
         setScore((s) => ({ correct: s.correct + 1, total: s.total + 1 }))
       } else {
+        playWrong()
+        saveQuizResult(pos.posKey, false)
         setAnswerState('wrong')
         setScore((s) => ({ ...s, total: s.total + 1 }))
 
@@ -228,7 +290,7 @@ export default function Quiz() {
       <div className="max-w-3xl mx-auto px-4 py-12 text-center">
         <h1 className="text-2xl font-bold mb-2">Opening not found</h1>
         <p className="text-gray-400 mb-4">That opening doesn't exist.</p>
-        <Link to="/openings" className="text-chess-gold hover:underline">
+        <Link to="/openings" className="text-chess-green hover:underline">
           Browse openings
         </Link>
       </div>
@@ -255,6 +317,7 @@ export default function Quiz() {
         <h1 className="text-2xl font-bold mt-2">{opening.name}</h1>
         <p className="text-gray-400 text-sm">
           {opening.eco} &middot; Quiz Mode
+          {selectedVariation && <> &middot; {selectedVariation}</>}
         </p>
       </div>
 
@@ -265,6 +328,9 @@ export default function Quiz() {
           position={position}
           score={score}
           onNext={loadNewPosition}
+          variationNames={variationNames}
+          selectedVariation={selectedVariation}
+          onVariationChange={handleVariationChange}
         />
       </div>
 
@@ -283,6 +349,9 @@ export default function Quiz() {
               position={position}
               score={score}
               onNext={loadNewPosition}
+              variationNames={variationNames}
+              selectedVariation={selectedVariation}
+              onVariationChange={handleVariationChange}
             />
           </div>
         </div>
@@ -296,14 +365,36 @@ function QuizPanel({
   position,
   score,
   onNext,
+  variationNames,
+  selectedVariation,
+  onVariationChange,
 }: {
   answerState: AnswerState
   position: QuizPosition | null
   score: { correct: number; total: number }
   onNext: () => void
+  variationNames: string[]
+  selectedVariation: string
+  onVariationChange: (variation: string) => void
 }) {
   return (
     <div className="bg-navy-900 rounded-lg p-4 space-y-4">
+      {/* Variation filter */}
+      <div>
+        <select
+          value={selectedVariation}
+          onChange={(e) => onVariationChange(e.target.value)}
+          className="w-full bg-navy-800 text-gray-200 text-sm rounded-lg px-3 py-2 border border-navy-700 focus:outline-none focus:border-chess-green/50"
+        >
+          <option value="">All Variations</option>
+          {variationNames.map((name) => (
+            <option key={name} value={name}>
+              {name}
+            </option>
+          ))}
+        </select>
+      </div>
+
       {/* Score */}
       <div className="flex items-center justify-between text-sm">
         <span className="text-gray-400 font-medium uppercase tracking-wider">Score</span>
@@ -328,6 +419,9 @@ function QuizPanel({
             <p className="text-chess-green font-semibold">Correct!</p>
             <p className="text-gray-300 text-sm mt-1">{position.expectedSan}</p>
           </div>
+          {position.coaching && (
+            <p className="text-gray-400 text-sm leading-relaxed">{position.coaching}</p>
+          )}
           <div className="text-xs text-gray-500">
             <span className="text-gray-400">From:</span> {position.lessonName}
           </div>
@@ -348,6 +442,11 @@ function QuizPanel({
               Expected: <span className="font-mono font-semibold">{position.expectedSan}</span>
             </p>
           </div>
+          {(position.wrongMoveExplanation || position.coaching) && (
+            <p className="text-gray-400 text-sm leading-relaxed">
+              {position.wrongMoveExplanation || position.coaching}
+            </p>
+          )}
           <div className="text-xs text-gray-500">
             <span className="text-gray-400">From:</span> {position.lessonName}
           </div>

@@ -8,14 +8,32 @@ public class CaroDbContext : DbContext
     public CaroDbContext(DbContextOptions<CaroDbContext> options) : base(options) { }
 
     public DbSet<Opening> Openings => Set<Opening>();
+    public DbSet<User> Users => Set<User>();
     public DbSet<UserProgress> UserProgresses => Set<UserProgress>();
+    public DbSet<LessonCompletion> LessonCompletions => Set<LessonCompletion>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.LoginKey)
+            .IsUnique();
+
+        modelBuilder.Entity<UserProgress>()
+            .HasOne(p => p.User)
+            .WithMany()
+            .HasForeignKey(p => p.UserId)
+            .IsRequired();
+
         modelBuilder.Entity<UserProgress>()
             .HasOne(p => p.Opening)
             .WithMany()
             .HasForeignKey(p => p.OpeningId)
+            .IsRequired();
+
+        modelBuilder.Entity<LessonCompletion>()
+            .HasOne(lc => lc.User)
+            .WithMany()
+            .HasForeignKey(lc => lc.UserId)
             .IsRequired();
 
         modelBuilder.Entity<Opening>().HasData(

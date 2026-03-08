@@ -1,40 +1,79 @@
 import { Link } from 'react-router-dom'
+import { useAuthStore } from '../stores/authStore'
 
 export default function Landing() {
+  const loginKey = useAuthStore((s) => s.loginKey)
+
   return (
-    <div className="min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center px-4 text-center">
-      <h1 className="text-5xl md:text-6xl font-bold mb-4">
-        Master your <span className="text-chess-gold">openings</span>
-      </h1>
-      <p className="text-lg text-gray-400 max-w-lg mb-8">
-        Learn chess openings move by move with interactive practice, instant feedback, and progress tracking.
-      </p>
-      <div className="flex gap-4">
-        <Link
-          to="/openings"
-          className="px-6 py-3 bg-chess-gold text-navy-950 font-semibold rounded-lg hover:bg-chess-gold/90 transition-colors"
-        >
-          Start Practicing
-        </Link>
-        <Link
-          to="/profile"
-          className="px-6 py-3 border border-navy-700 text-gray-300 rounded-lg hover:bg-navy-900 transition-colors"
-        >
-          View Progress
-        </Link>
+    <div className="min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-between px-4 py-16 relative overflow-hidden">
+      {/* Decorative board grid background */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+        <div
+          className="w-full h-full"
+          style={{
+            backgroundImage:
+              'repeating-conic-gradient(#fff 0% 25%, transparent 0% 50%)',
+            backgroundSize: '60px 60px',
+          }}
+        />
       </div>
 
-      <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl">
-        {[
-          { title: 'Move by Move', desc: 'Learn each opening one move at a time with explanations for every key decision.' },
-          { title: 'Instant Feedback', desc: 'Get immediate correction when you deviate from the line, with guidance on the right move.' },
-          { title: 'Track Progress', desc: 'See your accuracy improve over time as you drill openings until they become second nature.' },
-        ].map((f) => (
-          <div key={f.title} className="text-left">
-            <h3 className="text-chess-green font-semibold mb-2">{f.title}</h3>
-            <p className="text-gray-400 text-sm">{f.desc}</p>
-          </div>
-        ))}
+      {/* Spacer */}
+      <div />
+
+      {/* Hero */}
+      <div className="relative z-10 text-center max-w-xl">
+        <div className="inline-block px-3 py-1 rounded-full bg-chess-green/10 text-chess-green text-xs font-medium tracking-wide uppercase mb-5">
+          Opening Repertoire Trainer
+        </div>
+
+        <h1 className="text-4xl md:text-5xl font-bold leading-[1.15] mb-4 tracking-tight">
+          Stop forgetting
+          <br />
+          <span className="text-chess-green">your openings.</span>
+        </h1>
+
+        <p className="text-base text-navy-300 max-w-md mx-auto mb-8 leading-relaxed">
+          Drill every variation until it's muscle memory. Learn, practice, and
+          quiz yourself — backed by real game data.
+        </p>
+
+        <div className="flex gap-3 justify-center">
+          <Link
+            to={loginKey ? '/openings' : '/login'}
+            className="px-7 py-3 bg-chess-green text-white font-semibold rounded-lg hover:bg-chess-green/85 transition-colors shadow-lg shadow-chess-green/20"
+          >
+            {loginKey ? 'Continue Training' : 'Get Started'}
+          </Link>
+          {loginKey && (
+            <Link
+              to="/profile"
+              className="px-5 py-3 bg-navy-800 text-navy-200 rounded-lg hover:bg-navy-700 transition-colors"
+            >
+              Profile
+            </Link>
+          )}
+        </div>
+      </div>
+
+      {/* Features + Footer */}
+      <div className="relative z-10 w-full max-w-2xl">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+          {[
+            { title: 'Learn', desc: 'Step through each line with coaching from real opening theory.' },
+            { title: 'Practice', desc: 'Play moves on a board. Wrong answers get corrected immediately.' },
+            { title: 'Quiz', desc: 'Random positions from all lines. Spaced repetition targets weak spots.' },
+          ].map((feature) => (
+            <div
+              key={feature.title}
+              className="bg-navy-800/40 border border-navy-700/40 rounded-lg px-4 py-4"
+            >
+              <p className="text-gray-100 font-semibold text-sm mb-1">{feature.title}</p>
+              <p className="text-navy-400 text-xs leading-relaxed">{feature.desc}</p>
+            </div>
+          ))}
+        </div>
+        <p className="text-navy-500 text-xs text-center">Created by Ryan Helou</p>
       </div>
     </div>
   )

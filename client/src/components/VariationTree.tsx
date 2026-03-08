@@ -44,7 +44,7 @@ function TreeNode({
             to={`/practice/${openingId}?lesson=${lessonId}`}
             className="flex items-center gap-2 group"
           >
-            <span className="font-mono text-sm text-gray-300 group-hover:text-chess-gold transition-colors">
+            <span className="font-mono text-sm text-gray-300 group-hover:text-chess-green transition-colors">
               {node.san}
             </span>
             {isCompleted ? (
@@ -61,7 +61,7 @@ function TreeNode({
           <div className="flex items-center gap-2">
             <span className="font-mono text-sm text-gray-300">{node.san}</span>
             {node.variationName && (
-              <span className="text-xs text-chess-gold/80 font-medium">{node.variationName}</span>
+              <span className="text-xs text-chess-green/80 font-medium">{node.variationName}</span>
             )}
           </div>
         )}

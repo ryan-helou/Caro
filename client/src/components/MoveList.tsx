@@ -16,7 +16,7 @@ export default function MoveList() {
         Moves
       </h3>
       {chosenVariationName && (
-        <p className="text-chess-gold text-xs font-medium mb-2">{chosenVariationName}</p>
+        <p className="text-chess-green text-xs font-medium mb-2">{chosenVariationName}</p>
       )}
       <div className="space-y-1">
         {pairs.map(([white, black], i) => (
