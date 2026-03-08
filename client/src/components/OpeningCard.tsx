@@ -16,20 +16,18 @@ export default function OpeningCard({ opening }: Props) {
   return (
     <Link
       to={`/course/${opening.id}`}
-      className="block bg-navy-900 border border-navy-700 rounded-xl p-6 hover:border-chess-gold/50 transition-colors group"
+      className="block bg-navy-900 border border-navy-800 rounded-lg px-5 py-5 hover:border-navy-600 transition-colors group"
     >
-      <div className="flex items-start justify-between mb-3">
-        <h3 className="text-lg font-semibold text-gray-100 group-hover:text-chess-gold transition-colors">
-          {opening.name}
-        </h3>
-        <span className="text-xs font-mono bg-navy-800 text-gray-400 px-2 py-1 rounded">
-          {opening.eco}
-        </span>
-      </div>
-      <div className="flex items-center gap-3 text-sm text-gray-400">
-        <span>Play as {opening.color}</span>
-        <span>&middot;</span>
-        <span>{variations} variation{variations !== 1 ? 's' : ''}</span>
+      <div className="flex items-start justify-between">
+        <div>
+          <h3 className="text-base font-semibold text-gray-100 group-hover:text-chess-green transition-colors">
+            {opening.name}
+          </h3>
+          <p className="text-sm text-navy-400 mt-1">
+            {opening.eco} &middot; Play as {opening.color} &middot; {variations} lines
+          </p>
+        </div>
+        <span className="text-navy-500 group-hover:text-chess-green transition-colors mt-1">&rarr;</span>
       </div>
     </Link>
   )

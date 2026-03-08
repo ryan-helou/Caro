@@ -1,26 +1,48 @@
 @import "tailwindcss";
 @import "chessground/assets/chessground.base.css";
 @import "chessground/assets/chessground.brown.css";
+
+/* Chess.com brown board override */
+cg-board {
+  background-color: #f0d9b5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cg id='a'%3E%3Cg id='b'%3E%3Cg id='c'%3E%3Cg id='d'%3E%3Crect width='1' height='1' fill='%23f0d9b5'/%3E%3Crect x='1' y='1' width='1' height='1' fill='%23f0d9b5'/%3E%3Crect y='1' width='1' height='1' fill='%23b58863'/%3E%3Crect x='1' width='1' height='1' fill='%23b58863'/%3E%3C/g%3E%3Cuse x='2' href='%23d'/%3E%3C/g%3E%3Cuse x='4' href='%23c'/%3E%3C/g%3E%3Cuse y='2' href='%23b'/%3E%3C/g%3E%3Cuse y='4' href='%23a'/%3E%3C/svg%3E");
+}
+cg-board square.last-move {
+  background-color: rgba(255, 255, 0, 0.41);
+}
+cg-board square.selected {
+  background-color: rgba(20, 85, 30, 0.5);
+}
+cg-board square.move-dest {
+  background: radial-gradient(rgba(20, 85, 30, 0.5) 22%, #208530 0, rgba(0, 0, 0, 0.3) 0, rgba(0, 0, 0, 0) 0);
+}
 @import "chessground/assets/chessground.cburnett.css";
 
 @theme {
   --font-sans: 'Inter', sans-serif;
-  --color-navy-50: #eef2ff;
-  --color-navy-100: #e0e7ff;
-  --color-navy-200: #c7d2fe;
-  --color-navy-300: #a5b4fc;
-  --color-navy-400: #818cf8;
-  --color-navy-500: #6366f1;
-  --color-navy-600: #4f46e5;
-  --color-navy-700: #4338ca;
-  --color-navy-800: #1e2544;
-  --color-navy-900: #151b33;
-  --color-navy-950: #0c1022;
-  --color-chess-green: #629924;
-  --color-chess-gold: #d4a843;
+  --color-navy-50: #f7f6f5;
+  --color-navy-100: #e0dedb;
+  --color-navy-200: #c3c1be;
+  --color-navy-300: #9e9b98;
+  --color-navy-400: #7c7a78;
+  --color-navy-500: #5c5955;
+  --color-navy-600: #4a4845;
+  --color-navy-700: #3d3b38;
+  --color-navy-800: #302e2b;
+  --color-navy-900: #272522;
+  --color-navy-950: #1c1a17;
+  --color-chess-green: #81b64c;
+  --color-chess-gold: #e8a93e;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  background-color: #272522;
+  color: #f7f6f5;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgb(129 182 76 / 0.3);
 }

@@ -9,8 +9,9 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 const API_BASE = 'https://explorer.lichess.org/lichess'
-const DELAY_MS = 4000
-const MIN_GAMES = 1000
+const DELAY_MS = 1500
+const MIN_GAMES = 3000
+const MAX_PLY = 12
 const LICHESS_TOKEN = process.env.LICHESS_TOKEN ?? ''
 
 // Starting FEN: standard position (White to move)
@@ -59,24 +60,32 @@ async function fetchPosition(fen: string, retries = 5): Promise<LichessResponse>
 
   for (let attempt = 0; attempt <= retries; attempt++) {
     if (attempt > 0) {
-      const wait = 30000 * attempt // 30s, 60s, 90s, 120s, 150s
+      const wait = 10000 * attempt
       console.log(`  Retry ${attempt}/${retries}, waiting ${wait / 1000}s...`)
       await sleep(wait)
     }
-    const headers: Record<string, string> = {
-      'Accept': 'application/json',
+    try {
+      const headers: Record<string, string> = {
+        'Accept': 'application/json',
+      }
+      if (LICHESS_TOKEN) {
+        headers['Authorization'] = `Bearer ${LICHESS_TOKEN}`
+      }
+      const res = await fetch(url, { headers })
+      if (res.ok) {
+        return res.json() as Promise<LichessResponse>
+      }
+      if (res.status === 429 && attempt < retries) {
+        continue
+      }
+      throw new Error(`Lichess API error: ${res.status} ${res.statusText}`)
+    } catch (err) {
+      if (attempt < retries) {
+        console.log(`  Network error: ${(err as Error).message}, retrying...`)
+        continue
+      }
+      throw err
     }
-    if (LICHESS_TOKEN) {
-      headers['Authorization'] = `Bearer ${LICHESS_TOKEN}`
-    }
-    const res = await fetch(url, { headers })
-    if (res.ok) {
-      return res.json() as Promise<LichessResponse>
-    }
-    if (res.status === 429 && attempt < retries) {
-      continue
-    }
-    throw new Error(`Lichess API error: ${res.status} ${res.statusText}`)
   }
   throw new Error('Unreachable')
 }
@@ -103,21 +112,38 @@ function replayToFen(
 }
 
 /**
- * Collect all leaf nodes along with the move path from root to that leaf.
+ * Collect nodes that need extending:
+ * - Leaf nodes (children: [])
+ * - Under-branched opponent nodes (White to move, fewer children than MAX_BRANCHES)
  */
-function collectLeaves(
+const MAX_BRANCHES = 3
+
+function collectExtendable(
   node: MoveNode,
-  pathSoFar: string[]
+  pathSoFar: string[],
+  chessModule: typeof import('chess.js')
 ): { node: MoveNode; movePath: string[] }[] {
   const currentPath = [...pathSoFar, node.san]
+
   if (node.children.length === 0) {
     return [{ node, movePath: currentPath }]
   }
-  const leaves: { node: MoveNode; movePath: string[] }[] = []
-  for (const child of node.children) {
-    leaves.push(...collectLeaves(child, currentPath))
+
+  // Check if this node is under-branched (opponent has room for more responses)
+  const results: { node: MoveNode; movePath: string[] }[] = []
+  const fen = replayToFen(currentPath, chessModule)
+  const sideToMove = fen.split(' ')[1]
+  const isOpponentMove = sideToMove === 'w' // Player is Black, so White = opponent
+
+  // Only fill branches deeper in the tree (after the main Caro-Kann moves are established)
+  if (isOpponentMove && node.children.length < MAX_BRANCHES && currentPath.length >= 6 && currentPath.length < MAX_PLY - 1) {
+    results.push({ node, movePath: currentPath })
   }
-  return leaves
+
+  for (const child of node.children) {
+    results.push(...collectExtendable(child, currentPath, chessModule))
+  }
+  return results
 }
 
 /**
@@ -130,8 +156,10 @@ function collectLeaves(
  */
 async function extendFromFen(
   fen: string,
-  chessModule: typeof import('chess.js')
+  chessModule: typeof import('chess.js'),
+  ply: number
 ): Promise<MoveNode[]> {
+  if (ply >= MAX_PLY - 1) return []
   await sleep(DELAY_MS)
   const data = await fetchPosition(fen)
   if (data.moves.length === 0) return []
@@ -181,7 +209,7 @@ async function extendFromFen(
     }
 
     // Recurse using already-fetched data
-    node.children = await extendFromData(posData, newFen, chessModule)
+    node.children = await extendFromData(posData, newFen, chessModule, ply + 1)
 
     nodes.push(node)
   }
@@ -195,8 +223,10 @@ async function extendFromFen(
 async function extendFromData(
   data: LichessResponse,
   fen: string,
-  chessModule: typeof import('chess.js')
+  chessModule: typeof import('chess.js'),
+  ply: number
 ): Promise<MoveNode[]> {
+  if (ply >= MAX_PLY - 1) return []
   if (data.moves.length === 0) return []
 
   const sorted = data.moves
@@ -239,7 +269,7 @@ async function extendFromData(
       children: [],
     }
 
-    node.children = await extendFromData(posData, newFen, chessModule)
+    node.children = await extendFromData(posData, newFen, chessModule, ply + 1)
 
     nodes.push(node)
   }
@@ -305,6 +335,36 @@ function serializeNode(node: MoveNode, indent: number): string {
   return lines.join('\n')
 }
 
+function countNewNodes(nodes: MoveNode[]): number {
+  let c = 0
+  for (const n of nodes) {
+    c += 1 + countNewNodes(n.children)
+  }
+  return c
+}
+
+function saveTree(tree: MoveNode, openingsPath: string, lessonMetasSection: string) {
+  const output = `// Generated from Lichess Opening Explorer data (lichess.org/api#tag/Opening-Explorer)
+// Re-run \`npx tsx scripts/fetch-lichess-tree.ts\` to refresh from live API
+// Stats: rapid+classical games, ratings 2000-2500
+// Coaching text added manually after generation
+import type { Opening, LessonMeta } from '../types'
+
+export const openings: Opening[] = [
+  {
+    id: 1,
+    name: 'Caro-Kann Defense',
+    eco: 'B12',
+    color: 'black',
+    tree: ${serializeNode(tree, 2)},
+  },
+]
+
+${lessonMetasSection}
+`
+  fs.writeFileSync(openingsPath, output, 'utf-8')
+}
+
 async function main() {
   console.log('Extending Caro-Kann tree from leaf nodes...')
   console.log(`Min games: ${MIN_GAMES} (no max depth — goes until data runs out)`)
@@ -338,46 +398,89 @@ async function main() {
 
   const chessModule = await import('chess.js')
 
-  // Collect all leaf nodes
-  // The root is 'e4', so the path starts with ['e4']
-  const leaves = collectLeaves(tree, [])
-  console.log(`Found ${leaves.length} leaf nodes to extend`)
+  // Collect extendable nodes: leaves + under-branched opponent nodes
+  const extendable = collectExtendable(tree, [], chessModule)
+  console.log(`Found ${extendable.length} nodes to extend`)
   console.log()
 
   let extended = 0
   let newNodes = 0
 
-  for (let i = 0; i < leaves.length; i++) {
-    const leaf = leaves[i]
+  for (let i = 0; i < extendable.length; i++) {
+    const item = extendable[i]
+    const isLeaf = item.node.children.length === 0
     console.log(
-      `[${i + 1}/${leaves.length}] Extending: ${leaf.movePath.join(' ')}`
+      `[${i + 1}/${extendable.length}] ${isLeaf ? 'Extending leaf' : 'Filling branches'}: ${item.movePath.join(' ')}`
     )
 
-    // Replay the full move path to get the FEN at this leaf
-    const fen = replayToFen(leaf.movePath, chessModule)
+    // Replay the full move path to get the FEN
+    const fen = replayToFen(item.movePath, chessModule)
 
-    // Fetch and extend from this position
-    const children = await extendFromFen(fen, chessModule)
-
-    if (children.length > 0) {
-      leaf.node.children = children
-      extended++
-
-      // Count new nodes
-      function count(nodes: MoveNode[]): number {
-        let c = 0
-        for (const n of nodes) {
-          c += 1 + count(n.children)
-        }
-        return c
+    if (isLeaf) {
+      // Leaf node: extend as before
+      const children = await extendFromFen(fen, chessModule, item.movePath.length)
+      if (children.length > 0) {
+        item.node.children = children
+        extended++
+        const added = countNewNodes(children)
+        newNodes += added
+        console.log(`  -> Added ${added} new nodes`)
+      } else {
+        console.log(`  -> No extension (data exhausted)`)
       }
-      const added = count(children)
-      newNodes += added
-      console.log(`  -> Added ${added} new nodes`)
     } else {
-      console.log(`  -> No extension (data exhausted)`)
+      // Under-branched node: fetch and add missing children
+      await sleep(DELAY_MS)
+      const data = await fetchPosition(fen)
+      const existingSans = new Set(item.node.children.map((c) => c.san))
+      const sorted = data.moves
+        .map((m) => ({ ...m, total: totalGames(m) }))
+        .sort((a, b) => b.total - a.total)
+        .filter((m) => m.total >= MIN_GAMES)
+
+      const picked = sorted.slice(0, MAX_BRANCHES)
+      let added = 0
+
+      for (const move of picked) {
+        if (existingSans.has(move.san)) continue
+        const chess = new chessModule.Chess(fen)
+        const result = chess.move(move.san)
+        if (!result) continue
+
+        const newFen = chess.fen()
+        await sleep(DELAY_MS)
+        const posData = await fetchPosition(newFen)
+
+        const node: MoveNode = {
+          san: move.san,
+          stats: {
+            white: move.white,
+            draws: move.draws,
+            black: move.black,
+            games: move.total,
+            averageRating: move.averageRating,
+          },
+          openingName: posData.opening?.name,
+          children: [],
+        }
+
+        node.children = await extendFromData(posData, newFen, chessModule, item.movePath.length + 1)
+        item.node.children.push(node)
+        added += 1 + countNewNodes(node.children)
+      }
+
+      if (added > 0) {
+        extended++
+        newNodes += added
+        console.log(`  -> Added ${added} new nodes (filled branches)`)
+      } else {
+        console.log(`  -> No new branches to add`)
+      }
     }
 
+    // Save after each node so progress isn't lost on crash
+    saveTree(tree, openingsPath, lessonMetasSection)
+    console.log(`  [saved]`)
     console.log()
   }
 
@@ -389,33 +492,9 @@ async function main() {
   }
   countAll(tree)
 
-  console.log(`Extended ${extended}/${leaves.length} leaves`)
+  console.log(`Extended ${extended}/${extendable.length} nodes`)
   console.log(`Added ${newNodes} new nodes`)
   console.log(`Total tree size: ${totalNodes} nodes`)
-  console.log()
-
-  // Serialize the full tree back, preserving all fields
-  const header = `// Generated from Lichess Opening Explorer data (lichess.org/api#tag/Opening-Explorer)
-// Re-run \`npx tsx scripts/fetch-lichess-tree.ts\` to refresh from live API
-// Stats: rapid+classical games, ratings 2000-2500
-// Coaching text added manually after generation
-import type { Opening, LessonMeta } from '../types'
-
-export const openings: Opening[] = [
-  {
-    id: 1,
-    name: 'Caro-Kann Defense',
-    eco: 'B12',
-    color: 'black',
-    tree: ${serializeNode(tree, 2)},
-  },
-]
-
-${lessonMetasSection}
-`
-
-  fs.writeFileSync(openingsPath, header, 'utf-8')
-  console.log(`Written to ${openingsPath}`)
   console.log('Done!')
 }
 

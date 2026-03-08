@@ -27,3 +27,9 @@ public class UpdateProgressRequest
     public double PracticeAccuracy { get; set; }
     public int MovesCompleted { get; set; }
 }
+
+public class CompleteLessonRequest
+{
+    public int OpeningId { get; set; }
+    public int LessonId { get; set; }
+}

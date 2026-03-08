@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useCallback } from 'react'
 import { useParams, useSearchParams, Link } from 'react-router-dom'
 import { Chess } from 'chess.js'
 import StudyBoard from '../components/StudyBoard'
@@ -75,12 +75,28 @@ export default function Learn() {
 
   const currentStep = steps[stepIndex] || steps[0]
 
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+        setStepIndex((i) => Math.min(steps.length - 1, i + 1))
+      } else if (e.key === 'ArrowLeft') {
+        setStepIndex((i) => Math.max(0, i - 1))
+      }
+    },
+    [steps.length]
+  )
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [handleKeyDown])
+
   if (notFound) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-12 text-center">
         <h1 className="text-2xl font-bold mb-2">Lesson not found</h1>
         <p className="text-gray-400 mb-4">That lesson doesn't exist.</p>
-        <Link to="/openings" className="text-chess-gold hover:underline">
+        <Link to="/openings" className="text-chess-green hover:underline">
           Browse openings
         </Link>
       </div>
@@ -113,7 +129,7 @@ export default function Learn() {
     : null
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="mb-6">
         <Link
           to={`/course/${opening.id}`}
@@ -135,7 +151,7 @@ export default function Learn() {
             {meta.themes.map((theme) => (
               <span
                 key={theme}
-                className="px-2.5 py-1 bg-chess-gold/15 text-chess-gold text-xs font-medium rounded-full"
+                className="px-2.5 py-1 bg-chess-green/15 text-chess-green text-xs font-medium rounded-full"
               >
                 {theme}
               </span>
@@ -149,7 +165,7 @@ export default function Learn() {
       )}
 
       {/* Step-through section */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-6">
         <div>
           <StudyBoard
             fen={currentStep.fen}
@@ -193,9 +209,9 @@ export default function Learn() {
         </div>
 
         {/* Coaching sidebar */}
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           {isStart ? (
-            <div className="bg-navy-900 rounded-lg p-5">
+            <div className="bg-navy-900 rounded-lg p-5 flex-1">
               <p className="text-gray-400 text-sm">
                 Step through the moves to see coaching for each position. Use the
                 arrow buttons or click Next to begin.
@@ -203,14 +219,14 @@ export default function Learn() {
             </div>
           ) : (
             <div
-              className={`rounded-lg p-5 border ${
+              className={`rounded-lg p-5 border flex-1 ${
                 isPlayerMove
-                  ? 'bg-chess-gold/10 border-chess-gold/30'
+                  ? 'bg-chess-green/10 border-chess-green/30'
                   : 'bg-navy-900 border-navy-700'
               }`}
             >
               {moveLabel && (
-                <p className="font-mono text-chess-gold font-semibold text-lg mb-2">
+                <p className="font-mono text-chess-green font-semibold text-lg mb-2">
                   {moveLabel}
                 </p>
               )}

@@ -12,11 +12,11 @@ export default function ProgressCard({ progress }: Props) {
         <div>
           <div className="flex justify-between text-sm mb-1">
             <span className="text-gray-400">Accuracy</span>
-            <span className="text-chess-gold font-medium">{progress.practiceAccuracy}%</span>
+            <span className="text-chess-green font-medium">{progress.practiceAccuracy}%</span>
           </div>
           <div className="w-full bg-navy-800 rounded-full h-2">
             <div
-              className="bg-chess-gold rounded-full h-2 transition-all"
+              className="bg-chess-green rounded-full h-2 transition-all"
               style={{ width: `${progress.practiceAccuracy}%` }}
             />
           </div>

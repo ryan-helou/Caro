@@ -5,6 +5,7 @@ import type { Config } from 'chessground/config'
 import type { Key } from 'chessground/types'
 import { Chess } from 'chess.js'
 import { useGameStore } from '../stores/gameStore'
+import { playMove, playWrong } from '../utils/sounds'
 
 const ANIM_DURATION = 300
 
@@ -57,7 +58,10 @@ export default function ChessBoard() {
         events: {
           after: (orig, dest) => {
             const result = tryMove(orig as string, dest as string)
-            if (!result.correct) {
+            if (result.correct) {
+              playMove()
+            } else {
+              playWrong()
               setTimeout(() => {
                 const state = useGameStore.getState()
                 apiRef.current?.set({
@@ -97,6 +101,7 @@ export default function ChessBoard() {
     if (!pendingOpponentMove) return
     const timer = setTimeout(() => {
       playOpponentMove()
+      playMove()
     }, ANIM_DURATION + 150)
     return () => clearTimeout(timer)
   }, [pendingOpponentMove, playOpponentMove])

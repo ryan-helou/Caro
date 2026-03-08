@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import type { UserProgress } from '../types'
+import { authHeaders } from './authStore'
 
 interface ProgressState {
   progress: UserProgress[]
@@ -16,7 +17,7 @@ export const useProgressStore = create<ProgressState>((set, get) => ({
   fetchProgress: async () => {
     set({ loading: true })
     try {
-      const res = await fetch('/api/progress')
+      const res = await fetch('/api/progress', { headers: authHeaders() })
       if (res.ok) {
         const data = await res.json()
         set({ progress: data })
@@ -32,7 +33,7 @@ export const useProgressStore = create<ProgressState>((set, get) => ({
     try {
       await fetch('/api/progress', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify({
           openingId,
           practiceAccuracy: accuracy,

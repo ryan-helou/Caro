@@ -7,20 +7,15 @@ import { useGameStore } from '../stores/gameStore'
 import { useProgressStore } from '../stores/progressStore'
 import { extractLessons } from '../utils/treeUtils'
 import { openings } from '../data/openings'
+import { authHeaders } from '../stores/authStore'
 import type { Opening } from '../types'
 
 function saveLessonComplete(openingId: number, lessonId: number) {
-  const key = `caro-lessons-${openingId}`
-  try {
-    const raw = localStorage.getItem(key)
-    const data = raw ? JSON.parse(raw) : { completed: [] }
-    if (!data.completed.includes(lessonId)) {
-      data.completed.push(lessonId)
-      localStorage.setItem(key, JSON.stringify(data))
-    }
-  } catch {
-    localStorage.setItem(key, JSON.stringify({ completed: [lessonId] }))
-  }
+  fetch('/api/progress/lessons', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...authHeaders() },
+    body: JSON.stringify({ openingId, lessonId }),
+  }).catch(() => {})
 }
 
 export default function Practice() {
@@ -93,7 +88,7 @@ export default function Practice() {
       <div className="max-w-3xl mx-auto px-4 py-12 text-center">
         <h1 className="text-2xl font-bold mb-2">Opening not found</h1>
         <p className="text-gray-400 mb-4">That opening doesn't exist.</p>
-        <Link to="/openings" className="text-chess-gold hover:underline">
+        <Link to="/openings" className="text-chess-green hover:underline">
           Browse openings
         </Link>
       </div>
@@ -121,7 +116,7 @@ export default function Practice() {
           {lesson && (
             <Link
               to={`/learn/${opening.id}?lesson=${lesson.id}`}
-              className="text-sm text-chess-gold/70 hover:text-chess-gold transition-colors"
+              className="text-sm text-chess-green/70 hover:text-chess-green transition-colors"
             >
               Review lesson
             </Link>
