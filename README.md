@@ -1,6 +1,8 @@
-# Caro
+# ♞ Caro
 
 *A trainer for one chess opening — the Caro-Kann Defense (ECO B12) — that walks you through the lines, then makes you play them from memory.*
+
+![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white) ![.NET](https://img.shields.io/badge/.NET-512BD4?style=flat-square&logo=dotnet&logoColor=white) ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white)
 
 The whole app is built around a single hand-curated move tree for the Caro-Kann, played from Black's side. Every position in the tree carries the real Lichess numbers behind it — the tree was scraped from the Lichess Opening Explorer (rapid and classical games, 2000–2500 rating) by the scripts in `scripts/`, then the coaching text was written in by hand on top. So when the app tells you a move was "played in 300,039 games," that figure came from actual master-level play, not an estimate.
 
