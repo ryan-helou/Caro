@@ -1,6 +1,12 @@
+<div align="center">
+
 # Caro
 
-A practice app for learning one chess opening, the Caro-Kann Defense, by heart.
+**A practice app for learning one chess opening, the Caro-Kann Defense, by heart.**
+
+</div>
+
+<br>
 
 A chess "opening" is a well-known sequence of first moves. Caro teaches the Caro-Kann (played as Black) by walking you through its main variations and then making you play them from memory. Every position is backed by real statistics from games played by strong players on Lichess, a free chess website, and the explanations were written by hand. It is an early-stage practice project: only this one opening is covered, and parts of the account system are still unfinished.
 
