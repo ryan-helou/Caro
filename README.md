@@ -10,7 +10,7 @@
 
 <br>
 
-A chess "opening" is a well-known sequence of first moves. Caro teaches the Caro-Kann (played as Black) by walking you through its main variations and then making you play them from memory. Every position is backed by real statistics from games played by strong players on Lichess, a free chess website, and the explanations were written by hand. It goes deep on one opening instead of skimming many.
+A chess "opening" is a well-known sequence of first moves. Caro teaches the Caro-Kann (played as Black) by walking you through its main variations and then making you play them from memory. Every position is backed by real statistics from games played by strong players on Lichess, a free chess website, and the explanations were written by hand. It's a work in progress.
 
 ## What you can do with it
 
