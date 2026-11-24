@@ -4,6 +4,8 @@
 
 **A practice app for learning one chess opening, the Caro-Kann Defense, by heart.**
 
+<!-- facts --><img alt="Lessons: 23" src="https://img.shields.io/badge/Lessons-23-24292f?style=for-the-badge"> <img alt="You play: Black" src="https://img.shields.io/badge/You_play-Black-24292f?style=for-the-badge"> <img alt="Move stats: Lichess 2000 to 2500" src="https://img.shields.io/badge/Move_stats-Lichess_2000_to_2500-24292f?style=for-the-badge">
+
 </div>
 
 <br>
